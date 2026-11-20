@@ -1,8 +1,23 @@
-// Placeholder; step 3 replaces this with the seven sections.
+import { Closing } from "@/components/sections/Closing/Closing";
+import { Hero } from "@/components/sections/Hero/Hero";
+import { Notify } from "@/components/sections/Notify/Notify";
+import { Services } from "@/components/sections/Services/Services";
+import { Story } from "@/components/sections/Story/Story";
+import { Timing } from "@/components/sections/Timing/Timing";
+import { Uploads } from "@/components/sections/Uploads/Uploads";
+
 export default function Home() {
   return (
-    <main id="main">
-      <h1>Uptime monitoring for your NZBs</h1>
-    </main>
+    <>
+      <Hero />
+      <main id="main">
+        <Story />
+        <Timing />
+        <Uploads />
+        <Notify />
+        <Services />
+        <Closing />
+      </main>
+    </>
   );
 }

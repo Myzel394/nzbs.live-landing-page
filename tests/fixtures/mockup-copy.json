@@ -1,0 +1,157 @@
+{
+  "source": "design-reference/final.html, the approved mockup. Visible DOM copy only; canvas and SVG scene text is covered by later steps.",
+  "changes": [
+    "prom label: 'Caminandes in August' -> 'Caminandes in July' (the series data drops below 0.99 in July)",
+    "prom label: dropped 'above a sea of article tiles' (the tile sea only exists in the hero)"
+  ],
+  "copy": {
+    "skip": [
+      "Skip to content"
+    ],
+    "nav": [
+      "nzbs.live",
+      "How it works",
+      "For uploaders",
+      "Notifications",
+      "Start monitoring"
+    ],
+    "hero": [
+      "Uptime monitoring for your NZBs",
+      "Your NZB files point to pieces of files stored on Usenet, and those pieces disappear over time. nzbs.live checks every one of them each month and tells you which are gone.",
+      "One check per article, on the 1st of every month",
+      "Start monitoring",
+      "See how it works"
+    ],
+    "forgets": [
+      "How an NZB works",
+      "Usenet forgets, slowly",
+      "First, what an NZB actually is.",
+      "Know how Usenet works? Skip ahead",
+      "01 / 08",
+      "It starts with an NZB",
+      "A small file from an indexer, a few hundred kilobytes. You hand it to your downloader and get a whole film back.",
+      "02 / 08",
+      "Behind it, one big file",
+      "The NZB stands for a film, an ISO or an archive, many gigabytes. On Usenet that file never travels in one piece.",
+      "03 / 08",
+      "Cut into articles",
+      "Before it is posted, the file is packed into parts, and every part is cut into small pieces called articles. Repair files, par2, travel with them.",
+      "04 / 08",
+      "Spread across Usenet",
+      "Every article is posted on its own, with a name of its own: its Message-ID. Usenet providers keep the copies.",
+      "05 / 08",
+      "The NZB is only the list",
+      "So the NZB you started with does not contain the film. It is a map: every Message-ID, and where each piece belongs. That is all.",
+      "06 / 08",
+      "Your downloader puts it back",
+      "SABnzbd or NZBGet read the map, fetch every article and join the pieces into the file again.",
+      "07 / 08",
+      "Then Usenet forgets",
+      "Providers drop articles over time, when retention runs out or a takedown removes them. The NZB never changes. The pieces it points to do.",
+      "08 / 08",
+      "One gap is enough",
+      "With pieces gone, the file cannot be joined. par2 repair data covers a few gaps, until there are too many. Your downloader finds out at 97%."
+    ],
+    "early": [
+      "Timing",
+      "Know before your downloader does",
+      "The first night an article goes missing, you still have options: par2 covers a small gap, or you grab another NZB while one is still around. Found by your downloader months later, at 97%, there are none left."
+    ],
+    "prom": [
+      "For uploaders: Prometheus exporter",
+      "Watch how your uploads hold up",
+      "Upload to Usenet yourself? nzbs.live has a Prometheus exporter. Every NZB becomes a line in your graphs, so you see which uploads are fading and replace them before they sink.",
+      "GET /metrics",
+      "# HELP nzbs_live_nzb_availability Available unique articles / unique articles, last run",
+      "nzbs_live_nzb_availability{nzb=\"Spring.2019.2160p.nzb\"} 0.988519",
+      "nzbs_live_nzb_availability{nzb=\"Caminandes.Llamigos.2016.1080p.nzb\"} 0.98",
+      "nzbs_live_nzb_missing_articles{nzb=\"Spring.2019.2160p.nzb\"} 214",
+      "nzbs_live_last_check_timestamp_seconds 1795996800",
+      "Alert when an upload sinks",
+      "nzbs_live_nzb_availability < 0.99",
+      "Straight into Grafana, Alertmanager or the dashboards you already use."
+    ],
+    "notify": [
+      "On the 1st",
+      "One message, when the check is done",
+      "A few minutes after midnight on the 1st, nzbs.live sends one short message: how many NZBs lost articles, and how many articles. On a quiet month it tells you everything is good.",
+      "00:06",
+      "Sunday, 1 November",
+      "ntfy",
+      "now",
+      "nzbs.live: HEAD check finished",
+      "4 NZBs have missing articles (241 articles).",
+      "1 NZB could not be fully checked.",
+      "Checked 214 NZBs (3210448 articles), 1 failed in 6m12s.",
+      "ntfy",
+      "1 Oct",
+      "nzbs.live: HEAD check finished",
+      "Everything is good.",
+      "Checked 214 NZBs (3210448 articles) in 5m58s."
+    ],
+    "services": [
+      "29 services, through Shoutrrr",
+      "Wherever you already look",
+      "Chat apps, push services, email, smart-home hubs or a plain webhook. Pick one, or several.",
+      "ntfy",
+      "Discord",
+      "Telegram",
+      "Slack",
+      "Email",
+      "Signal",
+      "Matrix",
+      "Gotify",
+      "Microsoft Teams",
+      "Pushover",
+      "Home Assistant",
+      "Webhooks",
+      "Mattermost",
+      "Pushbullet",
+      "Google Chat",
+      "Rocket.Chat",
+      "Zulip",
+      "Bark",
+      "IFTTT",
+      "Join",
+      "Lark",
+      "MQTT",
+      "Notifiarr",
+      "Opsgenie",
+      "PagerDuty",
+      "Signalgrid",
+      "Twilio SMS",
+      "WeCom",
+      "XMPP"
+    ],
+    "start": [
+      "nzbs.live",
+      "Usenet keeps forgetting. Now you know.",
+      "Add your NZBs once. On the 1st of every month nzbs.live checks every article, keeps every result and tells you what went missing.",
+      "Start monitoring",
+      "How it works"
+    ],
+    "footer": [
+      "nzbs.live",
+      "How it works",
+      "Start monitoring",
+      "Uptime monitoring for your NZBs."
+    ]
+  },
+  "labels": {
+    "forgets": [
+      "An NZB file. A block of cubes, the file it stands for, grows out of it, then comes apart into its parts and articles, which scatter. The NZB is a list of them. A downloader joins them again, until articles drop out and the file cannot be joined."
+    ],
+    "early": [
+      "The same NZB as a block of articles on five monthly nights, July to November. In July one article is gone and the light is on it; by November 46 of 70 are gone."
+    ],
+    "prom": [
+      "Nine NZBs as lines across a year of monthly checks. Two sink below the waterline at 0.99, Caminandes in July and Spring.2019 in November."
+    ],
+    "notify": [
+      "A phone lock screen at 00:06 on Sunday, 1 November, with the nzbs.live message from ntfy on top and last month's below"
+    ],
+    "services": [
+      "Supported notification services"
+    ]
+  }
+}
