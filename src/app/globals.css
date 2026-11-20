@@ -1,0 +1,7 @@
+/* Placeholder; step 1 adds tokens.css and the global styles. */
+html,
+body {
+  margin: 0;
+  background: #0a0d12;
+  color: #eceff4;
+}
