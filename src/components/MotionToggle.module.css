@@ -1,0 +1,25 @@
+.toggle {
+  min-height: 36px;
+  padding: 0 13px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--bg) 70%, transparent);
+  color: var(--muted);
+  font: 500 12.5px var(--mono);
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    transform 0.15s var(--ease);
+}
+
+.toggle:hover {
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+/* Nothing moves with reduced motion, and without JavaScript the button cannot work. */
+@media (prefers-reduced-motion: reduce), (scripting: none) {
+  .toggle {
+    display: none;
+  }
+}

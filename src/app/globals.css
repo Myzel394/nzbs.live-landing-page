@@ -56,3 +56,10 @@ code {
 .skip-link:focus {
   top: 12px;
 }
+
+/* "Pause motion" (MotionToggle) stops CSS animations too; canvases stop through useMotionPaused. */
+html[data-motion="paused"] *,
+html[data-motion="paused"] *::before,
+html[data-motion="paused"] *::after {
+  animation-play-state: paused !important;
+}

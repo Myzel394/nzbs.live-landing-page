@@ -21,6 +21,10 @@ import {
   SiZulip,
 } from "react-icons/si";
 import { TbBrandPushover } from "react-icons/tb";
+import { ImmersiveSection } from "@/components/ImmersiveSection";
+import { SectionIntro } from "@/components/SectionIntro";
+import { Radar } from "./Radar";
+import styles from "./Services.module.css";
 
 type Service = {
   name: string;
@@ -68,7 +72,14 @@ export const SERVICES: readonly Service[] = [
   { name: "XMPP", icon: SiXmpp, weight: 1, url: "xmpp://USER:PASSWORD@HOST/?to=RECIPIENT" },
 ];
 
-type RadarItem = Service & {
+/** The radar's rings, inner first: which services sit on it, its radius (share of the radar) and where the first one starts. */
+export const RINGS = [
+  { weight: 3, radius: 0.34, startDeg: -80 },
+  { weight: 2, radius: 0.6, startDeg: -62 },
+  { weight: 1, radius: 0.88, startDeg: -95 },
+] as const;
+
+export type RadarItem = Service & {
   left: number; // % of the radar's width
   top: number; // % of the radar's height
   depth: number; // scale, 0.84 (back) to 1 (front)
@@ -81,11 +92,7 @@ type RadarItem = Service & {
  * The rings are ellipses (the radar is tilted), so y uses 44.6% instead of 50%.
  */
 export function radarLayout(services: readonly Service[] = SERVICES): RadarItem[] {
-  return [
-    { weight: 3, radius: 0.34, startDeg: -80 },
-    { weight: 2, radius: 0.6, startDeg: -62 },
-    { weight: 1, radius: 0.88, startDeg: -95 },
-  ].flatMap((ring) => {
+  return RINGS.flatMap((ring) => {
     const items = services.filter((s) => s.weight === ring.weight);
     return items.map((service, k) => {
       const a = ((ring.startDeg + (360 * k) / items.length) * Math.PI) / 180;
@@ -104,21 +111,16 @@ export function radarLayout(services: readonly Service[] = SERVICES): RadarItem[
 
 export function Services() {
   return (
-    <section id="services" aria-labelledby="services-title">
-      <div>
-        <p>{SERVICES.length} services, through Shoutrrr</p>
-        <h2 id="services-title">Wherever you already look</h2>
+    <ImmersiveSection id="services" aria-labelledby="services-title" height="auto" className={styles.section}>
+      <SectionIntro
+        label={`${SERVICES.length} services, through Shoutrrr`}
+        title="Wherever you already look"
+        titleId="services-title"
+        variant="centered"
+      >
         <p>Chat apps, push services, email, smart-home hubs or a plain webhook. Pick one, or several.</p>
-      </div>
-      {/* Rings and the radar sweep arrive in steps 4 and 8. */}
-      <ul aria-label="Supported notification services">
-        {SERVICES.map(({ name, icon: Icon }) => (
-          <li key={name}>
-            {Icon && <Icon aria-hidden="true" focusable="false" />}
-            <span>{name}</span>
-          </li>
-        ))}
-      </ul>
-    </section>
+      </SectionIntro>
+      <Radar items={radarLayout()} />
+    </ImmersiveSection>
   );
 }

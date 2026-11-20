@@ -1,26 +1,26 @@
 import { ButtonLink } from "@/components/ButtonLink";
-import { ScenePlaceholder } from "@/components/ScenePlaceholder";
+import { ImmersiveSection } from "@/components/ImmersiveSection";
+import { Lighthouse } from "@/components/lighthouse/Lighthouse";
+import { SectionIntro } from "@/components/SectionIntro";
 import { SIGNUP_URL } from "@/config";
+import styles from "./Closing.module.css";
 
 export function Closing() {
   return (
-    <section id="start" aria-labelledby="start-title">
-      {/* The lighthouse on a dark horizon arrives in step 6. */}
-      <ScenePlaceholder scene="closing" />
-      <div>
-        <p>nzbs.live</p>
-        <h2 id="start-title">Usenet keeps forgetting. Now you know.</h2>
+    <ImmersiveSection id="start" aria-labelledby="start-title">
+      <Lighthouse variant="closing" />
+      <SectionIntro label="nzbs.live" title="Usenet keeps forgetting. Now you know." titleId="start-title">
         <p>
           Add your NZBs once. On the 1st of every month nzbs.live checks every article, keeps every result and tells
           you what went missing.
         </p>
-        <div>
+        <div className={styles.actions}>
           <ButtonLink href={SIGNUP_URL}>Start monitoring</ButtonLink>
           <ButtonLink href="#forgets" variant="ghost">
             How it works
           </ButtonLink>
         </div>
-      </div>
-    </section>
+      </SectionIntro>
+    </ImmersiveSection>
   );
 }

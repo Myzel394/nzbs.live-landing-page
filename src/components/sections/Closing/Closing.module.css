@@ -1,0 +1,7 @@
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 36px 0 96px;
+  text-shadow: none;
+}

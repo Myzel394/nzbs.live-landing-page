@@ -1,0 +1,245 @@
+/* Wide: the chart is a full-bleed scene behind the text and the two glass cards sit on it.
+   Narrow (under 1180px): text, then a compact chart that fits, then the cards stacked. */
+
+.stage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Pointer, touch and keyboard pick a month (ChartPointer). Vertical swipes still scroll the page. */
+.stage,
+.compact {
+  cursor: crosshair;
+  touch-action: pan-y;
+}
+
+.stage:focus-visible,
+.compact:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: -4px;
+}
+
+.stage > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.compact {
+  display: none;
+}
+
+/* ---- SVG parts ---- */
+
+.cap {
+  paint-order: stroke;
+  stroke: rgb(10 13 18 / 85%);
+  stroke-width: 4px;
+  font-family: var(--mono);
+}
+
+.grid {
+  stroke: var(--ink);
+  stroke-opacity: 0.06;
+}
+
+.tick {
+  font-family: var(--mono);
+  fill: var(--dim);
+}
+
+.line {
+  stroke: var(--ink);
+  stroke-opacity: 0.32;
+}
+
+.lineSunk {
+  stroke: var(--acc);
+  stroke-opacity: 0.95;
+}
+
+.lineUnder {
+  stroke: var(--miss);
+}
+
+.dotUnder {
+  fill: var(--miss);
+}
+
+.endGlow {
+  fill: var(--miss);
+  opacity: 0.45;
+}
+
+.waterline {
+  stroke: var(--frost);
+  stroke-opacity: 0.5;
+  stroke-dasharray: 7 7;
+}
+
+.waterlineLabel {
+  fill: var(--frost);
+}
+
+.labelSunk {
+  fill: var(--miss-ink);
+}
+
+.labelSteady,
+.month {
+  fill: var(--caption);
+}
+
+.beam {
+  fill: #fff3d6;
+  opacity: 0.9;
+}
+
+.beamGlow {
+  fill: var(--acc);
+  opacity: 0.12;
+}
+
+/* The crosshair: moved by --x, which the chart sets on its <svg>. */
+.xh {
+  transform: translateX(var(--x));
+  transition: transform 0.25s var(--ease);
+}
+
+/* ---- Readout ---- */
+
+.readout {
+  width: 380px;
+  max-width: 100%;
+  margin-top: 26px;
+  padding: 14px 16px;
+  border: 1px solid rgb(235 203 139 / 35%);
+  border-radius: var(--r-card);
+  background: rgb(23 28 36 / 72%);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 50px -20px rgb(235 203 139 / 60%);
+  font: 400 12.5px / 1.75 var(--mono);
+  text-shadow: none;
+}
+
+.readout strong {
+  display: block;
+  margin-bottom: 6px;
+  font: 600 15px var(--font);
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--ink-soft);
+}
+
+.sunk {
+  color: var(--miss-ink);
+}
+
+.dim {
+  color: var(--muted);
+}
+
+/* ---- Glass cards ---- */
+
+.glass {
+  position: absolute;
+  z-index: 4;
+  bottom: 22px;
+  padding: 16px 18px;
+  border: 1px solid rgb(136 192 208 / 25%);
+  border-radius: var(--r-card);
+  background: rgb(14 18 24 / 66%);
+  backdrop-filter: blur(12px);
+}
+
+.glass p:first-child {
+  margin: 0 0 8px;
+  font: 400 var(--fs-small) / 1.55 var(--mono);
+  color: var(--acc);
+}
+
+.metrics {
+  left: var(--pad);
+  width: min(760px, 58vw);
+}
+
+.metrics pre {
+  margin: 0;
+  overflow-x: auto;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+.alert {
+  right: var(--pad);
+  width: min(400px, 30vw);
+}
+
+.alert code {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.alert p:last-child {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+@media (max-width: 1179px) {
+  .section {
+    padding-bottom: 56px;
+    background: linear-gradient(var(--seam), #151d29 55%, var(--seam));
+  }
+
+  .stage {
+    display: none;
+  }
+
+  /* The sea: the chart's own waterline (172 of 244) is where this gradient turns. */
+  .compact {
+    position: relative;
+    z-index: 3;
+    display: block;
+    margin-top: 28px;
+    background: linear-gradient(transparent 70.3%, #121821 70.5%, var(--seam));
+  }
+
+  .compact svg {
+    display: block;
+    width: 100%;
+    max-width: 640px;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .glass {
+    position: relative;
+    inset: auto;
+    width: auto;
+    margin: 16px var(--pad) 0;
+  }
+
+  .metrics,
+  .alert {
+    max-width: 720px;
+  }
+
+  .metrics pre {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xh {
+    transition: none;
+  }
+}

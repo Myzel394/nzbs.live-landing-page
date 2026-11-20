@@ -1,0 +1,133 @@
+.hero {
+  position: relative;
+  min-height: max(100vh, 760px);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* The page's first screen fades into the next section's night. */
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 200px;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(rgb(10 13 18 / 0%), var(--seam));
+}
+
+.copy {
+  position: relative;
+  z-index: 3;
+  max-width: 720px;
+  padding: 128px var(--pad) 0;
+}
+
+.copy h1 {
+  font-size: var(--fs-h1);
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+}
+
+.sub {
+  margin: 20px 0 0;
+  max-width: 44ch;
+  font-size: 19px;
+  color: var(--muted);
+}
+
+.fact {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0 0;
+  font: 400 13.5px / 1.5 var(--mono);
+  color: var(--ink);
+}
+
+.fact::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--acc);
+  box-shadow: 0 0 10px var(--acc);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.motion {
+  position: absolute;
+  z-index: 6;
+  left: var(--pad);
+  bottom: 22px;
+}
+
+.hint {
+  position: absolute;
+  z-index: 4;
+  right: var(--pad);
+  bottom: 26px;
+  margin: 0;
+  font: 400 12px / 1.55 var(--mono);
+  color: var(--muted);
+  opacity: 0.8;
+}
+
+/* Aiming needs a mouse, and does nothing when motion is off. */
+@media (max-width: 700px), not (pointer: fine), (prefers-reduced-motion: reduce) {
+  .hint {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .actions > a {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}
+
+/* Entrance: the headline only rises (so the largest text paints at once); the rest fades in after it. */
+@media (prefers-reduced-motion: no-preference) {
+  .copy > * {
+    animation: enter 0.9s var(--ease) both;
+  }
+
+  .copy > h1 {
+    animation-name: rise;
+  }
+
+  .copy > :nth-child(2) {
+    animation-delay: 0.08s;
+  }
+
+  .copy > :nth-child(3) {
+    animation-delay: 0.16s;
+  }
+
+  .copy > :nth-child(4) {
+    animation-delay: 0.24s;
+  }
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    translate: 0 18px;
+  }
+}
+
+@keyframes rise {
+  from {
+    translate: 0 18px;
+  }
+}

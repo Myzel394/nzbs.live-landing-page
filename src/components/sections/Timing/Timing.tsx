@@ -1,4 +1,9 @@
-import { ScenePlaceholder } from "@/components/ScenePlaceholder";
+import { ImmersiveSection } from "@/components/ImmersiveSection";
+import { SectionIntro } from "@/components/SectionIntro";
+import { TimingDrift } from "./TimingDrift";
+import { TimingRuns } from "./TimingRuns";
+import { TimingScene } from "./TimingScene";
+import styles from "./Timing.module.css";
 
 // The scene: the same NZB on five monthly nights, as a 10×7 grid of articles.
 
@@ -24,22 +29,24 @@ export const HOLE_ORDER = [
 
 export const holesFor = (gone: number): ReadonlySet<number> => new Set(HOLE_ORDER.slice(0, gone));
 
+const runs = RUNS.map((run) => ({ ...run, holes: holesFor(run.gone) }));
+
 export function Timing() {
   return (
-    <section id="early" aria-labelledby="early-title">
-      {/* The five monthly article grids arrive in step 4. */}
-      <ScenePlaceholder
-        scene="timing"
+    <ImmersiveSection id="early" aria-labelledby="early-title" className={styles.section}>
+      <TimingDrift />
+      <TimingScene
+        runs={runs}
+        grid={GRID}
         label="The same NZB as a block of articles on five monthly nights, July to November. In July one article is gone and the light is on it; by November 46 of 70 are gone."
       />
-      <div>
-        <p>Timing</p>
-        <h2 id="early-title">Know before your downloader does</h2>
+      <SectionIntro label="Timing" title="Know before your downloader does" titleId="early-title" variant="wide">
         <p>
           The first night an article goes missing, you still have options: par2 covers a small gap, or you grab
           another NZB while one is still around. Found by your downloader months later, at 97%, there are none left.
         </p>
-      </div>
-    </section>
+      </SectionIntro>
+      <TimingRuns runs={runs} grid={GRID} />
+    </ImmersiveSection>
   );
 }

@@ -1,0 +1,38 @@
+.section {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--seam);
+}
+
+.full {
+  min-height: max(100vh, 780px);
+}
+
+/* Seams: every scene fades into the page's background above and below it. */
+.section::before,
+.section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 110px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.section::before {
+  top: 0;
+  background: linear-gradient(var(--seam), rgb(10 13 18 / 0%));
+}
+
+.section::after {
+  bottom: 0;
+  background: linear-gradient(rgb(10 13 18 / 0%), var(--seam));
+}
+
+@media (max-width: 1179px) {
+  .full {
+    min-height: 0;
+  }
+}

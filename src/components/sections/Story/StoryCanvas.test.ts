@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ARTICLES, buildCubes, messageId, STORY_TEXT, TAGGED } from "./StoryScene";
+import { ARTICLES, buildCubes, messageId, STORY_TEXT, TAGGED } from "./StoryCanvas";
 
 // Reference values come from running the approved mockup's own JS.
 describe("story data", () => {
