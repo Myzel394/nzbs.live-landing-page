@@ -1,0 +1,46 @@
+/* Design tokens from the approved mockup (design-reference/NOTES.md, dark Nord palette). */
+:root {
+  color-scheme: dark;
+
+  /* Colour */
+  --seam: #0a0d12; /* page background and the seams between scenes */
+  --bg: #171c24; /* night sky, button text on the lamp colour */
+  --panel: #222833;
+  --line: #3b4252;
+  --ink: #eceff4;
+  --ink-soft: #d8dee9; /* body copy on scenes */
+  --muted: #a3abba;
+  --caption: #8a94a8; /* chart and scene captions */
+  --dim: #4c566a;
+  --night: #2e3440;
+  --acc: #ebcb8b; /* the lamp: accent, primary buttons, labels */
+  --miss: #bf616a; /* missing articles */
+  --miss-ink: #ff9aa3; /* text about missing articles */
+  --frost: #88c0d0; /* par2, the waterline */
+  --green: #a3be8c;
+
+  /* Type: families come from next/font (layout.tsx). */
+  --font: var(--font-bricolage), system-ui, sans-serif;
+  --mono: var(--font-jetbrains), ui-monospace, monospace;
+  --fs-body: 17px;
+  --fs-lede: 19px;
+  --fs-h1: clamp(46px, 6vw, 94px);
+  --fs-h2: clamp(40px, 5vw, 76px);
+  --fs-h2-story: clamp(40px, 4.6vw, 70px);
+  --fs-h3: clamp(28px, 2.6vw, 40px);
+  --fs-label: 13px; /* mono section labels */
+  --fs-small: 12px;
+
+  /* Layout */
+  --pad: clamp(20px, 5vw, 76px); /* page gutter */
+
+  /* Shape */
+  --r-button: 10px;
+  --r-card: 16px;
+  --r-note: 20px;
+  --r-pill: 999px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-drop: cubic-bezier(0.2, 1.3, 0.3, 1); /* small overshoot, for things that drop in */
+}

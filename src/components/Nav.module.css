@@ -1,0 +1,60 @@
+/* Sits over the hero; not sticky, as in the mockup. */
+.nav {
+  position: absolute;
+  z-index: 10;
+  inset: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 22px var(--pad);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 17px;
+  text-decoration: none;
+}
+
+.mark {
+  width: 26px;
+  height: 26px;
+}
+
+.links {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14.5px;
+}
+
+/* Text links get an underline that grows on hover. */
+.link {
+  padding: 12px;
+  color: var(--muted);
+  text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) 12px calc(100% - 8px) / 0 1px no-repeat;
+  transition:
+    color 0.2s,
+    background-size 0.3s var(--ease);
+}
+
+.link:hover {
+  color: var(--ink);
+  background-size: calc(100% - 24px) 1px;
+}
+
+@media (max-width: 700px) {
+  .link {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link {
+    transition: none;
+  }
+}
