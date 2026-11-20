@@ -1,9 +1,7 @@
-// The ntfy message nzbs.live sends after the monthly HEAD check.
-// Port of BuildNotification in notifications.go; the text must stay exactly as Go formats it.
+// The ntfy message nzbs.live sends after the monthly HEAD check. The text must stay exactly as
+// BuildNotification in notifications.go formats it.
 
-export const NOTIFICATION_TITLE = "nzbs.live: HEAD check finished";
-
-export type CheckRun = {
+type CheckRun = {
   checked: number; // NZBs checked
   articles: number; // articles checked
   nzbsMissing: number; // NZBs with missing articles
@@ -39,15 +37,3 @@ export function notificationLines(run: CheckRun): string[] {
   lines.push(`${stats} in ${goDuration(run.seconds)}.`);
   return lines;
 }
-
-/** The two messages on the phone: this month's run (1 Nov) and last month's (1 Oct). */
-export const PHONE_NOTIFICATIONS = [
-  {
-    time: "now",
-    lines: notificationLines({ checked: 214, articles: 3210448, nzbsMissing: 4, missing: 241, failed: 1, seconds: 372 }),
-  },
-  {
-    time: "1 Oct",
-    lines: notificationLines({ checked: 214, articles: 3210448, nzbsMissing: 0, missing: 0, failed: 0, seconds: 358 }),
-  },
-] as const;

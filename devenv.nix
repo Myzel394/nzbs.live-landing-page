@@ -12,7 +12,6 @@ in
 {
   packages = with pkgs; [
     just # task runner (justfile)
-    svgo # optimises the service logos in public/logos
     nixfmt # formats devenv.nix
   ];
 

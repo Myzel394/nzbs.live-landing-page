@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import { ALERT_RULE, MONTHS, SERIES, WATERLINE } from "./exporter";
+import { ALERT_RULE, MONTHS, SERIES, WATERLINE } from "./Uploads";
 
 it("has twelve monthly values for every NZB", () => {
   for (const s of SERIES) expect(s.values).toHaveLength(MONTHS.length);

@@ -1,15 +1,16 @@
 import { describe, expect, it } from "vitest";
-import { goDuration, notificationLines, NOTIFICATION_TITLE, PHONE_NOTIFICATIONS } from "./notifications";
+import { goDuration, notificationLines } from "./notification";
 
-describe("notifications", () => {
-  it("keeps the title and both phone messages exactly as Go formats them", () => {
-    expect(NOTIFICATION_TITLE).toBe("nzbs.live: HEAD check finished");
-    expect(PHONE_NOTIFICATIONS[0].lines.join("\n")).toBe(
+describe("notification", () => {
+  it("formats both phone messages exactly as Go does", () => {
+    expect(
+      notificationLines({ checked: 214, articles: 3210448, nzbsMissing: 4, missing: 241, failed: 1, seconds: 372 }).join("\n"),
+    ).toBe(
       "4 NZBs have missing articles (241 articles).\n1 NZB could not be fully checked.\nChecked 214 NZBs (3210448 articles), 1 failed in 6m12s.",
     );
-    expect(PHONE_NOTIFICATIONS[1].lines.join("\n")).toBe(
-      "Everything is good.\nChecked 214 NZBs (3210448 articles) in 5m58s.",
-    );
+    expect(
+      notificationLines({ checked: 214, articles: 3210448, nzbsMissing: 0, missing: 0, failed: 0, seconds: 358 }).join("\n"),
+    ).toBe("Everything is good.\nChecked 214 NZBs (3210448 articles) in 5m58s.");
   });
 
   it("uses singular forms for one", () => {

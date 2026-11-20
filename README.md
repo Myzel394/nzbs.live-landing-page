@@ -5,7 +5,7 @@ The approved design lives in `design-reference/` (see `design-reference/NOTES.md
 
 ## Environment
 
-Everything comes from [devenv](https://devenv.sh): Node 24, npm, just, svgo and nixfmt from nixpkgs;
+Everything comes from [devenv](https://devenv.sh): Node 24, npm, just and nixfmt from nixpkgs;
 the npm packages (Next.js, Playwright, Lighthouse CI, Vercel CLI) from `package-lock.json`; and
 Playwright's pinned Chromium, downloaded into `.devenv/state/ms-playwright` on first shell entry.
 

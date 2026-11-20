@@ -4,12 +4,6 @@ import { ButtonLink } from "./ButtonLink";
 import { LogoMark } from "./LogoMark";
 import styles from "./Nav.module.css";
 
-const LINKS = [
-  { href: "#forgets", label: "How it works" },
-  { href: "#prom", label: "For uploaders" },
-  { href: "#notify", label: "Notifications" },
-] as const;
-
 export function Nav() {
   return (
     <nav aria-label="Main" className={styles.nav}>
@@ -18,11 +12,15 @@ export function Nav() {
         nzbs.live
       </Link>
       <div className={styles.links}>
-        {LINKS.map((l) => (
-          <a key={l.href} href={l.href} className={styles.link}>
-            {l.label}
-          </a>
-        ))}
+        <a href="#forgets" className={styles.link}>
+          How it works
+        </a>
+        <a href="#prom" className={styles.link}>
+          For uploaders
+        </a>
+        <a href="#notify" className={styles.link}>
+          Notifications
+        </a>
         <ButtonLink href={SIGNUP_URL} size="small">
           Start monitoring
         </ButtonLink>

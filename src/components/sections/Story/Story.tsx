@@ -1,6 +1,6 @@
-import { ScenePlaceholder } from "@/components/ScenePlaceholder";
+import { StoryScene } from "./StoryScene";
 
-// The eight scroll steps of "Usenet forgets, slowly". The cube scene (step 7) follows them.
+// The eight scroll steps of "Usenet forgets, slowly". The cube scene follows them.
 const STEPS = [
   {
     title: "It starts with an NZB",
@@ -41,10 +41,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
 export function Story() {
   return (
     <section id="forgets" aria-labelledby="forgets-title">
-      <ScenePlaceholder
-        scene="story"
-        label="An NZB file. A block of cubes, the file it stands for, grows out of it, then comes apart into its parts and articles, which scatter. The NZB is a list of them. A downloader joins them again, until articles drop out and the file cannot be joined."
-      />
+      <StoryScene />
       <div>
         <p>How an NZB works</p>
         <h2 id="forgets-title">Usenet forgets, slowly</h2>
