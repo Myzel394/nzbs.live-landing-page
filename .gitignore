@@ -48,3 +48,8 @@ next-env.d.ts
 
 # lighthouse ci
 /.lighthouseci/
+
+# devenv and direnv
+.devenv*
+devenv.local.nix
+.direnv/
