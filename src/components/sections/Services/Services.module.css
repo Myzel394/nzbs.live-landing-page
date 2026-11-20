@@ -1,5 +1,5 @@
 .section {
-  padding-bottom: 70px;
+  padding-bottom: var(--space-7);
 }
 
 /* ---- The radar: three ellipses (the tilt is faked by squashing), a sweep, and a light per service ---- */
@@ -9,7 +9,7 @@
   z-index: 3;
   width: min(1040px, 94vw);
   aspect-ratio: 2 / 1.12;
-  margin: 0 auto;
+  margin: var(--space-6) auto 0;
 }
 
 .radar ul {
@@ -141,7 +141,7 @@
   .radar {
     width: auto;
     aspect-ratio: auto;
-    margin-top: 40px;
+    margin-top: var(--space-5);
     padding: 0 var(--pad);
   }
 
@@ -155,7 +155,7 @@
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     align-items: start;
-    gap: 22px 10px;
+    gap: var(--space-4) 12px;
   }
 
   /* Every service the same muted colour; names line up along the bottom of the cell, with or without a logo. */

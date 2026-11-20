@@ -2,6 +2,7 @@
   position: relative;
   overflow: hidden;
   isolation: isolate;
+  margin-top: var(--section-gap);
   background: var(--seam);
 }
 

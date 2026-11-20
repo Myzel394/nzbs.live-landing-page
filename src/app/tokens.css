@@ -32,7 +32,21 @@
   --fs-small: 12px;
 
   /* Layout */
-  --pad: clamp(20px, 5vw, 76px); /* page gutter */
+  --pad: clamp(24px, 6.5vw, 104px); /* page gutter */
+
+  /* Space: a calm scale for the gaps inside a section, and rhythm tokens for the page. */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 48px;
+  --space-6: 64px;
+  --space-7: 96px;
+  --space-8: 128px;
+  --section-gap: clamp(56px, 10vw, 160px); /* dark air between one scene and the next */
+  --intro-top: clamp(96px, 9.5vw, 136px); /* a section's text starts this far below its seam */
+  --gap-label: var(--space-3); /* mono label to heading */
+  --gap-lede: var(--space-4); /* heading to lede */
 
   /* Shape */
   --r-button: 10px;

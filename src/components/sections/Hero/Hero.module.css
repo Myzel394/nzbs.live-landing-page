@@ -21,8 +21,10 @@
 .copy {
   position: relative;
   z-index: 3;
-  max-width: 720px;
-  padding: 128px var(--pad) 0;
+  /* The mockup's 576px text column at any gutter, so the headline wraps as approved. */
+  max-width: calc(576px + 2 * var(--pad));
+  /* The copy is composed with the horizon: the buttons end where the sea begins (at 1440×900). */
+  padding: 112px var(--pad) 0;
 }
 
 .copy h1 {
@@ -32,8 +34,8 @@
 }
 
 .sub {
-  margin: 20px 0 0;
-  max-width: 44ch;
+  margin: var(--space-3) 0 0;
+  max-width: 46ch;
   font-size: 19px;
   color: var(--muted);
 }
@@ -42,7 +44,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 16px 0 0;
+  margin: 20px 0 0;
   font: 400 13.5px / 1.5 var(--mono);
   color: var(--ink);
 }
@@ -61,7 +63,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 28px;
+  margin-top: 36px;
 }
 
 .motion {

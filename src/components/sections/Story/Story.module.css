@@ -56,20 +56,20 @@
 }
 
 .label {
-  margin: 0 0 14px;
+  margin: 0 0 var(--gap-label);
   font: 400 var(--fs-label) / 1.55 var(--mono);
   color: var(--acc);
 }
 
 .title {
-  margin: 0 0 18px;
+  margin: 0 0 var(--space-3);
   font-size: var(--fs-h2-story);
   letter-spacing: -0.04em;
   line-height: 0.98;
 }
 
 .lede {
-  margin: 0 0 54px;
+  margin: 0 0 var(--space-6);
   font-size: 18px;
   color: var(--muted);
 }
@@ -98,8 +98,8 @@
 }
 
 .text {
-  margin: 14px 0 0;
-  max-width: 36ch;
+  margin: var(--space-2) 0 0;
+  max-width: 34ch;
   font-size: 18.5px;
   color: var(--ink-soft);
 }
@@ -133,7 +133,7 @@
     position: sticky;
     bottom: 3vh;
     margin-bottom: 3vh;
-    padding: 18px 18px 20px;
+    padding: var(--space-3);
     border: 1px solid var(--line);
     border-radius: var(--r-card);
     background: rgb(10 13 18 / 86%);
@@ -145,7 +145,7 @@
   }
 
   .lede {
-    margin-bottom: 26px;
+    margin-bottom: var(--space-4);
     font-size: 16px;
   }
 

@@ -4,7 +4,7 @@
   position: relative;
   z-index: 3;
   justify-self: center;
-  padding: 60px 0;
+  padding: var(--space-7) 0;
   perspective: 1400px;
 }
 

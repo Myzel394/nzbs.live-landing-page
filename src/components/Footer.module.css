@@ -1,8 +1,9 @@
 .footer {
   display: flex;
   flex-wrap: wrap;
-  gap: 28px;
-  padding: 36px var(--pad) 48px;
+  gap: var(--space-2) var(--space-5);
+  padding: var(--space-6) var(--pad) var(--space-7);
+  margin-top: var(--space-5);
   border-top: 1px solid var(--line);
   background: var(--seam);
   color: var(--muted);
