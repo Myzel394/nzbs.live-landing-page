@@ -3,8 +3,12 @@ import type { Box, Region } from "./isometric";
 /** A rectangle on the canvas. */
 export type Rect = { x: number; y: number; w: number; h: number };
 
+/** wide: scene right of the text. stacked: scene above the step cards. side: short landscape phone, card left, scene right. */
+export type StoryMode = "wide" | "stacked" | "side";
+
 export type StoryLayout = {
-  /** Phone-sized: the scene sits above the step cards instead of beside the text. */
+  mode: StoryMode;
+  /** Compact scene (stacked or side): smaller pages, no file labels. */
   narrow: boolean;
   /** Where each step's cubes are fitted; step 0 (the NZB page alone) has none. */
   regions: readonly (Region | null)[];
@@ -20,30 +24,36 @@ export const NARROW = 1000;
 /**
  * Where the cube scene of "Usenet forgets, slowly" puts things on a canvas of `width`×`height` CSS
  * pixels, as in the approved mockup: right of the step text on wide screens, above the cards on phones.
- * Pass `narrow` from the same media query the CSS uses, so canvas and text always agree on the layout.
+ * Pass `mode` from the CSS (`--story-mode`, Story.module.css), so canvas and text always agree on the layout.
  */
-export function storyLayout(width: number, height: number, narrow = width < NARROW): StoryLayout {
+export function storyLayout(width: number, height: number, mode: StoryMode = width < NARROW ? "stacked" : "wide"): StoryLayout {
   const W = width;
   const H = height;
-  const x0 = narrow ? W * 0.05 : Math.max(W * 0.42, 600);
-  const x1 = W * 0.96;
-  const top = narrow ? H * 0.05 : H * 0.1;
-  const bot = narrow ? H * 0.56 : H * 0.9;
+  const side = mode === "side";
+  const narrow = mode !== "wide";
+  const x0 = side ? W * 0.44 : narrow ? W * 0.05 : Math.max(W * 0.42, 600);
+  const x1 = side ? W * 0.97 : W * 0.96;
+  // Short landscape: leave room under the block for its captions and the ruler.
+  const top = side ? H * 0.08 : narrow ? H * 0.05 : H * 0.1;
+  const bot = side ? H - 72 : narrow ? H * 0.56 : H * 0.9;
   const cap = Math.min(W, H) / (narrow ? 32 : 33);
-  const card = narrow
-    ? { x: W * 0.05, y: H * 0.04, w: W * 0.9, h: H * 0.24 }
-    : { x: x0, y: H * 0.14, w: Math.min((x1 - x0) * 0.36, 320), h: H * 0.6 };
+  const card = side
+    ? { x: x0, y: top, w: Math.min(226, Math.max(200, (x1 - x0) * 0.5)), h: bot - top }
+    : narrow
+      ? { x: W * 0.05, y: H * 0.04, w: W * 0.9, h: H * 0.24 }
+      : { x: x0, y: H * 0.14, w: Math.min((x1 - x0) * 0.36, 320), h: H * 0.6 };
+  const stacked = mode === "stacked";
   const regions: (Region | null)[] = [
     null,
     [x0, top, x1, bot, cap],
-    [x0, top, narrow ? x1 : x1 - 330, bot],
+    [x0, top, stacked || side ? x1 : x1 - 330, bot],
     [x0, top, x1, bot],
-    narrow ? [x0, card.y + card.h + 14, x1, bot] : [card.x + card.w + 50, top, x1, bot],
+    stacked ? [x0, card.y + card.h + 14, x1, bot] : [card.x + card.w + (side ? 24 : 50), top, x1, bot],
     [x0, top, x1, bot, cap],
     [x0, top, x1, narrow ? bot : H * 0.8],
     [x0, top, x1, bot - 30, cap],
   ];
-  return { narrow, regions, card, rulerY: narrow ? H * 0.6 : H * 0.88 };
+  return { mode, narrow, regions, card, rulerY: side ? H - 36 : narrow ? H * 0.6 : H * 0.88 };
 }
 
 /**

@@ -25,6 +25,23 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title, description },
 };
 
+// Structured data for search engines: the site and the service it describes. No price or rating yet.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "WebSite", "@id": `${SITE_URL}/#website`, url: SITE_URL, name: "nzbs.live", description },
+    {
+      "@type": "WebApplication",
+      "@id": `${SITE_URL}/#app`,
+      url: SITE_URL,
+      name: "nzbs.live",
+      description,
+      applicationCategory: "UtilitiesApplication",
+      operatingSystem: "Any",
+    },
+  ],
+};
+
 export const viewport: Viewport = {
   themeColor: "#0a0d12",
   colorScheme: "dark",
@@ -34,6 +51,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${bricolage.variable} ${jetbrains.variable}`}>
       <body>
+        <script
+          type="application/ld+json"
+          // Escaped so no string in it can close the script tag.
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+        />
         <a className="skip-link" href="#main">
           Skip to content
         </a>

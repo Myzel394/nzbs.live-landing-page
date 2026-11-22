@@ -12,6 +12,12 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Tool state and reports: the devenv (with Playwright's browsers), test and Lighthouse output.
+    ".devenv/**",
+    ".direnv/**",
+    "test-results/**",
+    "playwright-report/**",
+    ".lighthouseci/**",
   ]),
 ]);
 

@@ -71,10 +71,19 @@
 
 .cell {
   fill: #e5e9f0;
+  stroke: #e5e9f0;
 }
 
 .warm {
   fill: #fff3da;
+  stroke: #fff3da;
+}
+
+/* The stroke rounds each cell's inner square into a 13×13 tile with 2px corners (see ArticleGrid). */
+.cell,
+.warm {
+  stroke-width: 4px;
+  stroke-linejoin: round;
 }
 
 .hole {

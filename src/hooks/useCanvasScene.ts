@@ -1,5 +1,5 @@
 import { useEffect, useEffectEvent, useRef, useState } from "react";
-import { type CanvasSize, fitCanvas } from "@/utils/canvas";
+import { type CanvasSize, fitCanvas, onPixelRatioChange } from "@/utils/canvas";
 import { createClock } from "@/utils/clock";
 import { useInView } from "./useInView";
 import { useMotionPaused } from "./useMotionPaused";
@@ -41,7 +41,7 @@ export function useCanvasScene({ layout, draw, stillTime = 0, maxDpr }: Scene) {
     render();
   });
 
-  // Size the canvas now and whenever its box changes, at most once per frame.
+  // Size the canvas now, whenever its box changes (at most once per frame) and when the pixel ratio changes.
   useEffect(() => {
     const canvas = ref.current;
     if (!canvas) return;
@@ -51,9 +51,11 @@ export function useCanvasScene({ layout, draw, stillTime = 0, maxDpr }: Scene) {
       frame = requestAnimationFrame(() => resize());
     });
     observer.observe(canvas);
+    const stopRatio = onPixelRatioChange(() => resize());
     resize();
     return () => {
       observer.disconnect();
+      stopRatio();
       cancelAnimationFrame(frame);
     };
   }, [ref]);

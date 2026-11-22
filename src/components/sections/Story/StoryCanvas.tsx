@@ -3,12 +3,12 @@
 import { useEffect, useEffectEvent, useRef } from "react";
 import { useMotionAllowed } from "@/hooks/useMotionAllowed";
 import { useStepProgress } from "@/hooks/useStepProgress";
-import { fitCanvas } from "@/utils/canvas";
+import { fitCanvas, onPixelRatioChange } from "@/utils/canvas";
 import { clamp, easeInOutCubic as ease } from "@/utils/ease";
 import { C30, depthOrder, fitIso, type IsoBox, type Projection, S30, sortByDepth } from "@/utils/isometric";
 import { seeded } from "@/utils/rng";
 import type { StepProgress } from "@/utils/stepProgress";
-import { nzbPages, type Rect, storyLayout, type StoryLayout } from "@/utils/storyLayout";
+import { nzbPages, type Rect, storyLayout, type StoryLayout, type StoryMode } from "@/utils/storyLayout";
 import styles from "./Story.module.css";
 
 // The cube scene of "Usenet forgets, slowly": one example release, cut into 8 files of 12×6 articles
@@ -177,11 +177,17 @@ type Scene = StoryLayout & {
   order: Uint16Array;
 };
 
-/** The CSS switches the steps to phone cards at this width (Story.module.css); the canvas follows it. */
-const PHONE_QUERY = "(max-width: 999px)";
+/**
+ * The layout the step text is in, as the CSS sets it (`--story-mode` in Story.module.css), so text and
+ * scene always agree. A change of layout resizes the full-screen canvas, which rebuilds the scene.
+ */
+const modeOf = (canvas: HTMLCanvasElement): StoryMode => {
+  const mode = getComputedStyle(canvas).getPropertyValue("--story-mode").trim();
+  return mode === "stacked" || mode === "side" ? mode : "wide";
+};
 
-function buildScene(ctx: CanvasRenderingContext2D, width: number, height: number, mono: string): Scene {
-  const layout = storyLayout(width, height, matchMedia(PHONE_QUERY).matches);
+function buildScene(ctx: CanvasRenderingContext2D, width: number, height: number, mono: string, mode: StoryMode): Scene {
+  const layout = storyLayout(width, height, mode);
   const states: Projection[] = [];
   for (let k = 1; k < STEPS; k++) {
     states[k] = fitIso(
@@ -315,13 +321,13 @@ function nzbPage(scene: Scene, d: Rect, text: boolean) {
  * Text waits for `text` (the web font being ready).
  */
 function paint(scene: Scene, b: number, u: number, text: boolean) {
-  const { ctx, width: W, height: H, narrow, states, card, regions } = scene;
+  const { ctx, width: W, height: H, narrow, mode, states, card, regions } = scene;
   const font = (weight: number, size: number) => `${weight} ${size}px ${scene.mono}`;
   /** Sets the font, smaller if needed so `line` fits across the canvas (long captions on phones). */
-  const fitFont = (line: string, weight: number, size: number) => {
+  const fitFont = (line: string, weight: number, size: number, room = W - 24) => {
     ctx.font = font(weight, size);
     const width = ctx.measureText(line).width;
-    if (width > W - 24) ctx.font = font(weight, (size * (W - 24)) / width);
+    if (width > room) ctx.font = font(weight, (size * room) / width);
   };
   ctx.clearRect(0, 0, W, H);
   const F = b === 0 ? 1 : ease(clamp(u / 0.4, 0, 1));
@@ -466,11 +472,17 @@ function paint(scene: Scene, b: number, u: number, text: boolean) {
     ctx.globalAlpha = aTags;
     ctx.font = font(400, 10.5);
     const P = states[3];
+    const drawn: [number, number, number][] = [];
     TAGGED.forEach((i, k) => {
       const tag = TAG_TEXT[k];
       const tw = ctx.measureText(tag).width;
       const tx = Math.min(P.X[i] + P.s[i] + 8, W - tw - 10);
       const ty = P.Y[i] + P.s[i] * 0.5 - P.h[i] * 0.5;
+      // On a short landscape screen the tags would crowd each other: skip one that would overprint another.
+      if (mode === "side") {
+        if (drawn.some(([x, y, w]) => tx - 5 < x + w && x < tx + tw + 5 && ty - 11 < y + 17 && y < ty + 6)) return;
+        drawn.push([tx - 5, ty - 11, tw + 10]);
+      }
       ctx.fillStyle = "rgba(10,13,18,.88)";
       ctx.fillRect(tx - 5, ty - 11, tw + 10, 17);
       ctx.fillStyle = "#EBCB8B";
@@ -481,7 +493,7 @@ function paint(scene: Scene, b: number, u: number, text: boolean) {
   // The NZB as a card of segments, each threaded to its article.
   const aCard = show(4);
   if (aCard > 0.01) {
-    const rows = Math.max(3, Math.min(THREADED.length, Math.floor((card.h - 84) / 38)));
+    const rows = Math.max(1, Math.min(THREADED.length, Math.floor((card.h - 84) / 38)));
     const P = states[4];
     ctx.globalAlpha = aCard;
     ctx.fillStyle = "rgba(16,21,28,.92)";
@@ -504,8 +516,8 @@ function paint(scene: Scene, b: number, u: number, text: boolean) {
       ctx.fillText(STORY_TEXT.segment(i), card.x + 16, ly);
       ctx.fillStyle = "#EBCB8B";
       ctx.fillText(THREAD_TEXT[k], card.x + 16, ly + 14);
-      const sx = narrow ? card.x + card.w * (0.2 + k * 0.1) : card.x + card.w;
-      const sy = narrow ? card.y + card.h : ly + 4;
+      const sx = mode === "stacked" ? card.x + card.w * (0.2 + k * 0.1) : card.x + card.w;
+      const sy = mode === "stacked" ? card.y + card.h : ly + 4;
       ctx.strokeStyle = "rgba(235,203,139,.38)";
       ctx.beginPath();
       ctx.moveTo(sx, sy);
@@ -517,7 +529,7 @@ function paint(scene: Scene, b: number, u: number, text: boolean) {
       ctx.stroke();
     }
     ctx.fillStyle = "#A3ABBA";
-    ctx.fillText(STORY_TEXT.cardFooter, card.x + 16, card.y + card.h - 16);
+    ctx.fillText(STORY_TEXT.cardFooter, card.x + 16, card.y + card.h - 16, card.w - 32);
   }
 
   // The month ruler while articles drop out.
@@ -554,7 +566,9 @@ function paint(scene: Scene, b: number, u: number, text: boolean) {
     const bx = states[7].box;
     ctx.globalAlpha = aGone;
     ctx.textAlign = "center";
-    fitFont(STORY_TEXT.gone, 500, 13.5);
+    const cx = (bx[0] + bx[2]) / 2;
+    // Beside the card, the caption is centred under the block: it may only use the room to the right edge.
+    fitFont(STORY_TEXT.gone, 500, 13.5, mode === "side" ? Math.max(120, Math.min(W - 24, 2 * (W - 12 - cx))) : W - 24);
     ctx.fillStyle = "#ff9aa3";
     ctx.fillText(STORY_TEXT.gone, (bx[0] + bx[2]) / 2, bx[3] + 30);
     ctx.textAlign = "left";
@@ -608,8 +622,8 @@ export function StoryCanvas({ label, stepsId }: Props) {
     draw();
   });
 
-  // Lay out on mount and whenever the canvas changes size (ResizeObserver reports at most once per frame,
-  // and rebuilding is cheap, so there is no stretched stale frame while resizing).
+  // Lay out on mount, when the pixel ratio changes and whenever the canvas changes size (ResizeObserver
+  // reports at most once per frame, and rebuilding is cheap, so there is no stretched stale frame while resizing).
   useEffect(() => {
     const canvas = ref.current;
     const ctx = canvas?.getContext("2d");
@@ -617,12 +631,13 @@ export function StoryCanvas({ label, stepsId }: Props) {
     const mono = getComputedStyle(canvas).fontFamily;
     const build = () => {
       const { width, height } = fitCanvas(canvas, ctx, devicePixelRatio);
-      scene.current = buildScene(ctx, width, height, mono);
+      scene.current = buildScene(ctx, width, height, mono, modeOf(canvas));
       painted.current = -1;
       render();
     };
     const observer = new ResizeObserver(build);
     observer.observe(canvas);
+    const stopRatio = onPixelRatioChange(build);
 
     // Draw text only in the real font: the weights the scene uses, from the variable font.
     let live = true;
@@ -638,6 +653,7 @@ export function StoryCanvas({ label, stepsId }: Props) {
     return () => {
       live = false;
       observer.disconnect();
+      stopRatio();
     };
   }, []);
 

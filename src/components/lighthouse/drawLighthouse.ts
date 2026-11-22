@@ -1,4 +1,4 @@
-import type { CanvasSize } from "@/utils/canvas";
+import { type CanvasSize, storeScale } from "@/utils/canvas";
 import { type Aim, beamAt, emberLevel, layoutLighthouse, type LighthouseGeometry } from "@/utils/lighthouse";
 
 /** What differs between the hero's lighthouse and the closing section's. */
@@ -40,6 +40,8 @@ export function createLighthouseRenderer(look: LighthouseLook) {
   /** When each missing tile was last lit by the beam, for its fading ember. */
   let lastLit = new Float32Array(0);
   let litTiles = new Float32Array(0);
+  /** The last frame's time: when time jumps (to the still frame, say), embers start over, so a frame never depends on the ones before it. */
+  let lastTime = -Infinity;
   const cone = document.createElement("canvas");
   const coneCtx = cone.getContext("2d");
   // Safari has no canvas filter: there the low-resolution upscale alone does the softening.
@@ -58,13 +60,16 @@ export function createLighthouseRenderer(look: LighthouseLook) {
     backdrop.height = Math.round(height * dpr);
     const ctx = backdrop.getContext("2d");
     if (!ctx) return;
-    ctx.scale(dpr, dpr);
+    // Per axis, as in fitCanvas: the backdrop must cover every pixel, or its edge lets older frames through.
+    ctx.scale(storeScale(backdrop.width, width, dpr), storeScale(backdrop.height, height, dpr));
     let gradient = ctx.createLinearGradient(0, 0, 0, g.horizon);
     gradient.addColorStop(0, look.skyTop);
     gradient.addColorStop(0.7, "#171f2a");
     gradient.addColorStop(1, "#243041");
     ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, width, g.horizon);
+    // One pixel past the horizon: the sea starts on a fractional row, and two half-covered fills there would
+    // leave it see-through, letting earlier frames show along the horizon.
+    ctx.fillRect(0, 0, width, g.horizon + 1);
     gradient = ctx.createRadialGradient(g.lamp.x, g.horizon, 0, g.lamp.x, g.horizon, width * look.hazeRadius);
     gradient.addColorStop(0, `rgba(235,203,139,${look.haze})`);
     gradient.addColorStop(1, "rgba(235,203,139,0)");
@@ -265,6 +270,8 @@ export function createLighthouseRenderer(look: LighthouseLook) {
 
   function draw(ctx: CanvasRenderingContext2D, { width, height }: CanvasSize, time: number, aim: Aim | null) {
     if (!g || !backdrop) return;
+    if (time < lastTime || time - lastTime > 1) lastLit.fill(-99);
+    lastTime = time;
     const beam = beamAt(time, g, aim);
     ctx.globalAlpha = 1;
     ctx.drawImage(backdrop, 0, 0, width, height);

@@ -39,3 +39,20 @@ describe("nzbPages", () => {
     expect(small.w).toBe(84);
   });
 });
+
+describe("storyLayout on a short landscape phone", () => {
+  const l = storyLayout(844, 390, "side");
+
+  it("puts the card left and the scene right of it, clear of the step text", () => {
+    expect(l.mode).toBe("side");
+    expect(l.narrow).toBe(true);
+    expect(l.regions[1]![0]).toBeGreaterThan(844 * 0.4 + 16);
+    expect(l.regions[1]![3]).toBeLessThanOrEqual(390 - 70);
+    expect(l.rulerY).toBeLessThan(390 - 20);
+  });
+
+  it("scatters step 5 right of the NZB card, which fits its rows", () => {
+    expect(l.regions[4]![0]).toBeGreaterThan(l.card.x + l.card.w);
+    expect(l.card.h).toBeGreaterThanOrEqual(122);
+  });
+});
