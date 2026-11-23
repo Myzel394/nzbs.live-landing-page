@@ -21,7 +21,9 @@ export function ChartPointer({ className, xs, months, children }: Props) {
   const { month, setMonth } = useUploadsMonth();
 
   useEffect(() => {
-    ref.current?.querySelector("svg")?.style.setProperty("--x", `${xs[month]}px`);
+    const svg = ref.current?.querySelector("svg");
+    // A share of the viewBox's width: the crosshair translates against the viewBox (transform-box in the CSS).
+    if (svg) svg.style.setProperty("--x", `${(xs[month] / svg.viewBox.baseVal.width) * 100}%`);
   }, [month, xs]);
 
   const pick = (e: PointerEvent) => {

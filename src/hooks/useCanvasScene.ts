@@ -22,7 +22,7 @@ type Scene = {
  * Returns the ref to put on the <canvas>.
  */
 export function useCanvasScene({ layout, draw, stillTime = 0, maxDpr }: Scene) {
-  const [ref, visible] = useInView<HTMLCanvasElement>({ once: false, rootMargin: "0px" });
+  const [ref, visible] = useInView<HTMLCanvasElement>({ once: false, rootMargin: "0%" });
   const reduced = useReducedMotion();
   const [paused] = useMotionPaused();
   const scene = useRef<{ ctx: CanvasRenderingContext2D; size: CanvasSize } | null>(null);

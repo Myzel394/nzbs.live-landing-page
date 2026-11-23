@@ -11,7 +11,7 @@ type Options = {
  * Whether an element is in the viewport. By default it turns true once the element's top passes
  * 80% of the viewport height, which works for elements of any height.
  */
-export function useInView<T extends Element>({ once = true, rootMargin = "0px 0px -20% 0px", threshold = 0 }: Options = {}) {
+export function useInView<T extends Element>({ once = true, rootMargin = "0% 0% -20% 0%", threshold = 0 }: Options = {}) {
   const ref = useRef<T>(null);
   const [inView, setInView] = useState(false);
 

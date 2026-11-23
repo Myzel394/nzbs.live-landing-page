@@ -48,8 +48,9 @@ export function createLighthouseRenderer(look: LighthouseLook) {
   const blurs = !!coneCtx && "filter" in coneCtx;
   const coneScale = blurs ? CONE_SCALE : 0.12;
 
-  function layout({ width, height, dpr }: CanvasSize) {
-    g = layoutLighthouse(width, height, look);
+  /** `narrow`: the phone layout, as the CSS chose it. */
+  function layout({ width, height, dpr }: CanvasSize, narrow: boolean) {
+    g = layoutLighthouse(width, height, look, narrow);
     lastLit = new Float32Array(g.missing.length).fill(-99);
     litTiles = new Float32Array(Math.max(3, g.tileX.length * 3));
     cone.width = Math.ceil(width * coneScale);

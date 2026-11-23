@@ -43,7 +43,9 @@ export function LighthouseCanvas({ variant }: { variant: LighthouseVariant }) {
   const aimable = variant === "hero" && motionAllowed;
 
   const ref = useCanvasScene({
-    layout: renderer.layout,
+    // The CSS picks the layout (its placeholder gradient matches); a change of layout always resizes the canvas.
+    layout: (size) =>
+      renderer.layout(size, !!ref.current && getComputedStyle(ref.current).getPropertyValue("--lighthouse-layout").trim() === "narrow"),
     draw: (ctx, size, time) => renderer.draw(ctx, size, time, aimable ? aim.step(performance.now() / 1000) : null),
     stillTime: STILL_TIME,
     maxDpr: 1.5,

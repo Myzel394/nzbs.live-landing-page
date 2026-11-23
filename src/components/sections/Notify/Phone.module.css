@@ -5,27 +5,27 @@
   z-index: 3;
   justify-self: center;
   padding: var(--space-7) 0;
-  perspective: 1400px;
+  perspective: 87.5rem;
 }
 
 .phone {
   position: relative;
-  width: 300px;
-  height: 620px;
+  width: 18.75rem;
+  height: 38.75rem;
   margin: 0;
-  padding: 12px;
-  border-radius: 50px;
+  padding: 0.75rem;
+  border-radius: 3.125rem;
   background: linear-gradient(145deg, #2a303b, #12151a 40%, #0b0d11);
   box-shadow:
-    inset 0 0 0 1.5px var(--line),
-    0 0 0 1px #000,
-    40px 60px 120px -30px rgb(0 0 0 / 90%),
-    0 0 120px -30px rgb(235 203 139 / 35%);
+    inset 0 0 0 0.09375rem var(--line),
+    0 0 0 0.0625rem #000,
+    2.5rem 3.75rem 7.5rem -1.875rem rgb(0 0 0 / 90%),
+    0 0 7.5rem -1.875rem rgb(235 203 139 / 35%);
   transform: rotateY(-16deg) rotateX(6deg) rotateZ(1deg);
   transition: transform 1.2s var(--ease);
 }
 
-@media (min-width: 1000px) and (hover: hover) and (prefers-reduced-motion: no-preference) {
+@media (width >= 62.5em) and (hover: hover) and (prefers-reduced-motion: no-preference) {
   .stage:hover .phone {
     transform: rotateY(-6deg) rotateX(3deg);
   }
@@ -45,9 +45,9 @@
   position: relative;
   isolation: isolate;
   height: 100%;
-  padding: 70px 12px 0;
+  padding: 4.375rem 0.75rem 0;
   overflow: hidden;
-  border-radius: 39px;
+  border-radius: 2.4375rem;
   text-align: center;
   font-family: -apple-system, system-ui, sans-serif;
   color: var(--ink);
@@ -58,12 +58,12 @@
   content: "";
   position: absolute;
   z-index: 2;
-  top: 12px;
+  top: 0.75rem;
   left: 50%;
-  width: 96px;
-  height: 28px;
-  margin-left: -48px;
-  border-radius: 20px;
+  width: 6rem;
+  height: 1.75rem;
+  margin-left: -3rem;
+  border-radius: 1.25rem;
   background: #000;
 }
 
@@ -85,7 +85,7 @@
 }
 
 .wpbeam {
-  transform-origin: 232px 455px;
+  transform-origin: 14.5rem 28.4375rem;
   animation: sweep 7s ease-in-out infinite alternate;
 }
 
@@ -102,44 +102,44 @@
 .clock {
   margin: 0;
   font-weight: 300;
-  font-size: 76px;
+  font-size: 4.75rem;
   line-height: 1;
   letter-spacing: -0.03em;
 }
 
 .date {
-  margin: 6px 0 0;
-  font-size: 15px;
+  margin: 0.375rem 0 0;
+  font-size: 0.9375rem;
   opacity: 0.85;
 }
 
 .note {
-  margin-top: 30px;
-  padding: 11px 13px 12px;
-  border-radius: 20px;
+  margin-top: 1.875rem;
+  padding: 0.6875rem 0.8125rem 0.75rem;
+  border-radius: 1.25rem;
   background: rgb(236 239 244 / 90%);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(0.75rem);
   text-align: left;
-  font-size: 13px;
+  font-size: 0.8125rem;
   line-height: 1.4;
   color: var(--night);
 }
 
 .note strong {
   display: block;
-  font-size: 13.5px;
+  font-size: 0.84375rem;
 }
 
 .note p {
-  margin: 1px 0 0;
+  margin: 0.0625rem 0 0;
 }
 
 .note .noteHead {
   display: flex;
   align-items: center;
-  gap: 7px;
-  margin: 0 0 2px;
-  font-size: 11.5px;
+  gap: 0.4375rem;
+  margin: 0 0 0.125rem;
+  font-size: 0.71875rem;
   color: var(--dim);
 }
 
@@ -150,11 +150,11 @@
 .logo {
   display: grid;
   place-items: center;
-  width: 18px;
-  height: 18px;
-  border-radius: 5px;
+  width: 1.125rem;
+  height: 1.125rem;
+  border-radius: 0.3125rem;
   background: #fff;
-  box-shadow: 0 0 0 1px rgb(0 0 0 / 8%);
+  box-shadow: 0 0 0 0.0625rem rgb(0 0 0 / 8%);
   color: #338574;
 }
 
@@ -164,7 +164,7 @@
 }
 
 .earlier {
-  margin: 8px 8px 0;
+  margin: 0.5rem 0.5rem 0;
   opacity: 0.72;
   transform: scale(0.97);
 }
@@ -181,7 +181,7 @@
 
   :global(html:not([data-motion="paused"])) :global([data-reveal]:not([data-in])) .note {
     opacity: 0;
-    translate: 0 -40px;
+    translate: 0 -2.5rem;
     scale: 0.96;
   }
 
@@ -197,17 +197,17 @@
 .homebar {
   position: absolute;
   left: 50%;
-  bottom: 9px;
-  width: 120px;
-  height: 5px;
-  margin-left: -60px;
-  border-radius: 3px;
+  bottom: 0.5625rem;
+  width: 7.5rem;
+  height: 0.3125rem;
+  margin-left: -3.75rem;
+  border-radius: 0.1875rem;
   background: rgb(236 239 244 / 70%);
 }
 
-@media (max-width: 999px) {
+@media (width < 62.5em) {
   .stage {
-    padding: 40px 0 20px;
+    padding: 2.5rem 0 1.25rem;
   }
 
   .phone {

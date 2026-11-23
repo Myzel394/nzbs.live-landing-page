@@ -22,37 +22,37 @@
   /* Type: families come from next/font (layout.tsx). */
   --font: var(--font-bricolage), system-ui, sans-serif;
   --mono: var(--font-jetbrains), ui-monospace, monospace;
-  --fs-body: 17px;
-  --fs-lede: 19px;
-  --fs-h1: clamp(46px, 6vw, 94px);
-  --fs-h2: clamp(40px, 5vw, 76px);
-  --fs-h2-story: clamp(40px, 4.6vw, 70px);
-  --fs-h3: clamp(28px, 2.6vw, 40px);
-  --fs-label: 13px; /* mono section labels */
-  --fs-small: 12px;
+  --fs-body: 1.0625rem;
+  --fs-lede: 1.1875rem;
+  --fs-h1: clamp(2.875rem, 6vw, 5.875rem);
+  --fs-h2: clamp(2.5rem, 5vw, 4.75rem);
+  --fs-h2-story: clamp(2.5rem, 4.6vw, 4.375rem);
+  --fs-h3: clamp(1.75rem, 2.6vw, 2.5rem);
+  --fs-label: 0.8125rem; /* mono section labels */
+  --fs-small: 0.75rem;
 
   /* Layout */
-  --pad: clamp(24px, 6.5vw, 104px); /* page gutter */
+  --pad: clamp(1.5rem, 6.5vw, 6.5rem); /* page gutter */
 
   /* Space: a calm scale for the gaps inside a section, and rhythm tokens for the page. */
-  --space-1: 8px;
-  --space-2: 16px;
-  --space-3: 24px;
-  --space-4: 32px;
-  --space-5: 48px;
-  --space-6: 64px;
-  --space-7: 96px;
-  --space-8: 128px;
-  --section-gap: clamp(56px, 10vw, 160px); /* dark air between one scene and the next */
-  --intro-top: clamp(96px, 9.5vw, 136px); /* a section's text starts this far below its seam */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 3rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+  --space-8: 8rem;
+  --section-gap: clamp(3.5rem, 10vw, 10rem); /* dark air between one scene and the next */
+  --intro-top: clamp(6rem, 9.5vw, 8.5rem); /* a section's text starts this far below its seam */
   --gap-label: var(--space-3); /* mono label to heading */
   --gap-lede: var(--space-4); /* heading to lede */
 
   /* Shape */
-  --r-button: 10px;
-  --r-card: 16px;
-  --r-note: 20px;
-  --r-pill: 999px;
+  --r-button: 0.625rem;
+  --r-card: 1rem;
+  --r-note: 1.25rem;
+  --r-pill: 62.4375rem;
 
   /* Motion */
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);

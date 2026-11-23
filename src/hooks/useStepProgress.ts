@@ -49,7 +49,7 @@ export function useStepProgress(listId: string, onProgress: (progress: StepProgr
       else removeEventListener("scroll", schedule);
       // One more read either way, so a fast jump past the story still settles on its first or last frame.
       schedule();
-    }, { rootMargin: "50% 0px" }); // start listening a little early, so re-entering after a jump never shows a stale frame
+    }, { rootMargin: "50% 0%" }); // start listening a little early, so re-entering after a jump never shows a stale frame
     observer.observe(list);
     addEventListener("resize", schedule);
     list.setAttribute("data-live", "");

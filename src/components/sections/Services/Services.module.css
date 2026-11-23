@@ -7,7 +7,7 @@
 .radar {
   position: relative;
   z-index: 3;
-  width: min(1040px, 94vw);
+  width: min(65rem, 94vw);
   aspect-ratio: 2 / 1.12;
   margin: var(--space-6) auto 0;
 }
@@ -25,7 +25,7 @@
   width: calc(var(--r) * 100%);
   height: calc(var(--r) * 89.3%);
   translate: -50% -50%;
-  border: 1px solid rgb(136 192 208 / 14%);
+  border: 0.0625rem solid rgb(136 192 208 / 14%);
   border-radius: 50%;
 }
 
@@ -61,15 +61,15 @@
   left: 50%;
   top: 50%;
   z-index: 30;
-  width: 46px;
-  height: 46px;
-  padding: 9px;
+  width: 2.875rem;
+  height: 2.875rem;
+  padding: 0.5625rem;
   translate: -50% -50%;
-  border-radius: 14px;
+  border-radius: 0.875rem;
   background: var(--bg);
   box-shadow:
-    0 0 0 1px var(--line),
-    0 0 60px 10px rgb(235 203 139 / 30%);
+    0 0 0 0.0625rem var(--line),
+    0 0 3.75rem 0.625rem rgb(235 203 139 / 30%);
 }
 
 .hub svg {
@@ -78,14 +78,14 @@
   height: 100%;
 }
 
-/* `--i` is how lit a service is, 0 to 1. Above 760px it follows `--i-default`; below, every service is the same. */
+/* `--i` is how lit a service is, 0 to 1. Above 47.5em it follows `--i-default`; below, every service is the same. */
 .item {
   --i: var(--i-default, 0);
   position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
   translate: -50% -50%;
   scale: var(--d);
   color: color-mix(in srgb, #ffe9b8 calc(var(--i) * 100%), #7f899c);
@@ -93,7 +93,7 @@
 
 .mark {
   display: block;
-  filter: drop-shadow(0 0 calc(var(--i) * 16px) rgb(235 203 139 / 85%));
+  filter: drop-shadow(0 0 calc(var(--i) * 1rem) rgb(235 203 139 / 85%));
 }
 
 .mark svg {
@@ -111,33 +111,33 @@
 }
 
 .inner .mark {
-  width: 50px;
-  height: 50px;
+  width: 3.125rem;
+  height: 3.125rem;
 }
 
 .inner .name {
-  font-size: 17px;
+  font-size: 1.0625rem;
 }
 
 .middle .mark {
-  width: 36px;
-  height: 36px;
+  width: 2.25rem;
+  height: 2.25rem;
 }
 
 .middle .name {
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .outer .mark {
-  width: 26px;
-  height: 26px;
+  width: 1.625rem;
+  height: 1.625rem;
 }
 
 .outer .name {
   font-size: var(--fs-small);
 }
 
-@media (max-width: 760px) {
+@media (width <= 47.5em) {
   .radar {
     width: auto;
     aspect-ratio: auto;
@@ -155,7 +155,7 @@
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     align-items: start;
-    gap: var(--space-4) 12px;
+    gap: var(--space-4) 0.75rem;
   }
 
   /* Every service the same muted colour; names line up along the bottom of the cell, with or without a logo. */
@@ -163,14 +163,14 @@
     --i: 0;
     position: static;
     justify-content: flex-end;
-    min-height: 66px;
+    min-height: 4.125rem;
     translate: none;
     scale: 1;
   }
 
   .item .mark {
-    width: 34px;
-    height: 34px;
+    width: 2.125rem;
+    height: 2.125rem;
   }
 
   .item .name {

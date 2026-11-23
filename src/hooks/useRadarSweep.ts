@@ -6,11 +6,11 @@ import { useMotionAllowed } from "./useMotionAllowed";
 /**
  * Turns the radar's sweep (`[data-radar-sweep]`, its `--rot`) and lights each `[data-sweep]` service through
  * its `--i-default` as the beam passes. Runs only while the radar is on screen, motion is allowed and the
- * viewport is wider than 760px (below that the radar is a plain grid). Styles are written straight to the
+ * viewport is wider than 47.5em (up to that the radar is a plain grid). Styles are written straight to the
  * elements, not through React state. Returns the ref for the radar's root element.
  */
 export function useRadarSweep<T extends HTMLElement>(startDeg: number) {
-  const [ref, visible] = useInView<T>({ once: false, rootMargin: "0px" });
+  const [ref, visible] = useInView<T>({ once: false, rootMargin: "0%" });
   const allowed = useMotionAllowed();
   const rot = useRef(startDeg);
 
@@ -19,7 +19,7 @@ export function useRadarSweep<T extends HTMLElement>(startDeg: number) {
     const sweep = root?.querySelector<HTMLElement>("[data-radar-sweep]");
     if (!root || !sweep || !allowed || !visible) return;
     const items = [...root.querySelectorAll<HTMLElement>("[data-sweep]")].map((el) => ({ el, deg: Number(el.dataset.sweep) }));
-    const wide = matchMedia("(min-width: 761px)");
+    const wide = matchMedia("(width > 47.5em)");
 
     let frame = 0;
     let last = 0;

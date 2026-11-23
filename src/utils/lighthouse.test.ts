@@ -4,13 +4,13 @@ import { AIM_HOLD, beamAt, createAim, emberLevel, layoutLighthouse } from "./lig
 const options = { moteCount: 320, starSpan: 0.35, tiles: true };
 
 describe("layoutLighthouse", () => {
-  const wide = layoutLighthouse(1440, 900, options);
+  const wide = layoutLighthouse(1440, 900, options, false);
 
   it("places the horizon and lamp like the mockup, and moves them on narrow screens", () => {
     expect(wide.narrow).toBe(false);
     expect(wide.horizon).toBeCloseTo(594);
     expect(wide.lamp).toEqual({ x: 1440 * 0.82, y: 900 * 0.27 });
-    const narrow = layoutLighthouse(390, 844, options);
+    const narrow = layoutLighthouse(390, 844, options, true);
     expect(narrow.narrow).toBe(true);
     expect(narrow.horizon).toBeCloseTo(844 * 0.86);
     expect(narrow.lamp.x).toBeCloseTo(390 * 0.86);
@@ -18,7 +18,7 @@ describe("layoutLighthouse", () => {
   });
 
   it("is deterministic", () => {
-    expect(layoutLighthouse(1440, 900, options)).toEqual(wide);
+    expect(layoutLighthouse(1440, 900, options, false)).toEqual(wide);
   });
 
   it("lays out about 3000 tiles in 20 rows, a few percent of them missing", () => {
@@ -33,7 +33,7 @@ describe("layoutLighthouse", () => {
   });
 
   it("has no sea without tiles", () => {
-    const g = layoutLighthouse(1440, 900, { ...options, tiles: false });
+    const g = layoutLighthouse(1440, 900, { ...options, tiles: false }, false);
     expect(g.rows).toHaveLength(0);
     expect(g.tileX).toHaveLength(0);
     expect(g.missing).toHaveLength(0);
@@ -42,7 +42,7 @@ describe("layoutLighthouse", () => {
 });
 
 describe("beamAt", () => {
-  const g = layoutLighthouse(1440, 900, options);
+  const g = layoutLighthouse(1440, 900, options, false);
 
   it("sweeps from the lamp out to the left and back every 10 seconds", () => {
     expect(beamAt(0, g, null).x).toBeCloseTo(g.lamp.x);

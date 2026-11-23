@@ -1,6 +1,8 @@
 /* The scene fills its section, behind the text. Before the canvas loads, a gradient stands in for its first
    frame: sky, a warm haze on the horizon, sea, and the lit lamp (positions as in utils/lighthouse.ts). */
+/* --lighthouse-layout tells the canvas which layout the placeholder (and so the scene) is in. */
 .scene {
+  --lighthouse-layout: wide;
   --horizon: 66%;
   --lamp-x: 82%;
   --lamp-y: 27%;
@@ -9,7 +11,7 @@
   z-index: 0;
   overflow: hidden;
   background:
-    radial-gradient(circle 34px at var(--lamp-x) var(--lamp-y), rgb(255 244 214 / 55%), rgb(235 203 139 / 20%) 45%, transparent),
+    radial-gradient(circle 2.125rem at var(--lamp-x) var(--lamp-y), rgb(255 244 214 / 55%), rgb(235 203 139 / 20%) 45%, transparent),
     radial-gradient(circle 65vw at var(--lamp-x) 100%, rgb(235 203 139 / var(--haze)), transparent) 0 0 / 100% var(--horizon) no-repeat,
     linear-gradient(
       var(--sky-top) 0,
@@ -32,8 +34,9 @@
   --haze: 9%;
 }
 
-@media (max-width: 799px) {
+@media (width < 50em) {
   .scene {
+    --lighthouse-layout: narrow;
     --horizon: 86%;
     --lamp-x: 86%;
     --lamp-y: 76%;

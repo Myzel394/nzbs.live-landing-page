@@ -25,7 +25,7 @@ export function TimingRuns({ runs, grid }: Props) {
       <div className={styles.runs}>
         <p className={`${styles.stop} ${styles.stopFirst}`}>
           <strong>nzbs.live tells you here</strong>
-          <span>par2 covers one gap, or grab another NZB</span>
+          <span>par2 covers some gaps</span>
         </p>
         {runs.map((run, k) => (
           <figure key={run.label} className={styles.run} data-tone={k === 0 ? "first" : k === last ? "last" : "mid"}>
@@ -42,7 +42,7 @@ export function TimingRuns({ runs, grid }: Props) {
         ))}
         <p className={`${styles.stop} ${styles.stopLast}`}>
           <strong>your downloader finds out here</strong>
-          <span>too many gone, stops at 97%</span>
+          <span>too many gone, file is forever unrecoverable</span>
         </p>
       </div>
     </>

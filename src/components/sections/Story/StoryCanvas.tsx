@@ -4,9 +4,10 @@ import { useEffect, useEffectEvent, useRef } from "react";
 import { useMotionAllowed } from "@/hooks/useMotionAllowed";
 import { useStepProgress } from "@/hooks/useStepProgress";
 import { fitCanvas, onPixelRatioChange } from "@/utils/canvas";
+import { buildCubes, type Cube } from "@/utils/cubes";
 import { clamp, easeInOutCubic as ease } from "@/utils/ease";
 import { C30, depthOrder, fitIso, type IsoBox, type Projection, S30, sortByDepth } from "@/utils/isometric";
-import { seeded } from "@/utils/rng";
+import { messageId } from "@/utils/messageId";
 import type { StepProgress } from "@/utils/stepProgress";
 import { nzbPages, type Rect, storyLayout, type StoryLayout, type StoryMode } from "@/utils/storyLayout";
 import styles from "./Story.module.css";
@@ -45,49 +46,11 @@ export const MISSING: readonly (readonly number[])[] = [
 export const TAGGED = [9, 130, 215, 300, 377, 470] as const;
 export const THREADED = [5, 66, 140, 207, 288, 351, 433, 512, 570] as const;
 
-/** A made-up but stable Message-ID for article i (0-based). */
-export function messageId(i: number): string {
-  const hash = (Math.imul(i + 7, 2654435761) >>> 0).toString(36).slice(0, 6);
-  return `part${i + 1}of${ARTICLES}.${hash}@news.example`;
-}
-
-export type Cube = {
-  layer: number; // file index, 0 = top
-  gx: number; // column, 0..FX-1
-  gy: number; // row, 0..FY-1
-  par2: boolean;
-  gone: boolean;
-  goneIndex: number; // order in which missing articles turn red, or -1
-  rx: number; // scatter position, -1..1
-  ry: number; // scatter position, -1..1
-  rz: number; // scatter height, 0..1
-  lag: number; // stagger delay as a share of a step, 0..0.16
-};
-
 /** Every article as a cube, in the mockup's order and with its seeded scatter (seed 7). */
-export function buildCubes(): Cube[] {
-  const rnd = seeded(7);
-  const cubes: Cube[] = [];
-  let gone = 0;
-  FILES.forEach((_, layer) => {
-    for (let k = 0; k < FX * FY; k++) {
-      const isGone = MISSING[layer].includes(k);
-      cubes.push({
-        layer,
-        gx: k % FX,
-        gy: Math.floor(k / FX),
-        par2: layer >= PAR2_FROM,
-        gone: isGone,
-        goneIndex: isGone ? gone++ : -1,
-        rx: rnd() * 2 - 1,
-        ry: rnd() * 2 - 1,
-        rz: rnd(),
-        lag: rnd() * 0.16,
-      });
-    }
-  });
-  return cubes;
-}
+export const CUBES = buildCubes({ files: FILES.length, cols: FX, rows: FY, missing: MISSING, par2From: PAR2_FROM, seed: 7 });
+
+/** This release's Message-ID for article i (0-based). */
+export const articleId = (i: number) => messageId(i, ARTICLES);
 
 const MISSING_COUNT = MISSING.flat().length;
 
@@ -110,7 +73,6 @@ export const STORY_TEXT = {
 // ---------------------------------------------------------------------------------------------
 // Geometry: where every cube sits in each step, projected once per canvas size.
 
-const CUBES = buildCubes();
 const N = CUBES.length;
 /** Progress through a step after which every cube has arrived (the tween takes 0.34 after its lag). */
 const SETTLED = Math.max(...CUBES.map((c) => c.lag)) + 0.34;
@@ -122,8 +84,8 @@ const SETTLED = Math.max(...CUBES.map((c) => c.lag)) + 0.34;
 const stillFrame = (b: number, u: number) => (b === 0 || (u >= Math.max(SETTLED, 0.4) && (b !== 6 || u >= 0.75)) ? b : -1);
 const TOP = FILES.length - 1;
 const STEPS = 8;
-const TAG_TEXT = TAGGED.map((i) => `<${messageId(i)}>`);
-const THREAD_TEXT = THREADED.map((i) => `${messageId(i).slice(0, 22)}…`);
+const TAG_TEXT = TAGGED.map((i) => `<${articleId(i)}>`);
+const THREAD_TEXT = THREADED.map((i) => `${articleId(i).slice(0, 22)}…`);
 
 /** A cube's place in step 1..7, in cube units (step 0 shows the NZB alone). */
 function place(step: number, c: Cube): IsoBox {
@@ -209,8 +171,10 @@ function buildScene(ctx: CanvasRenderingContext2D, width: number, height: number
   const orders = states.map((p) => depthOrder(p.d));
   const glows = states.map(({ box }) => {
     const r = Math.max(box[2] - box[0], box[3] - box[1]) * 0.8;
-    const at = `${(box[0] + box[2]) / 2}px ${(box[1] + box[3]) / 2}px`;
-    return `radial-gradient(circle ${r}px at ${at}, rgb(235 203 139 / 8%), rgb(235 203 139 / 0%) ${r}px)`;
+    // A circle of radius r on the canvas, written as shares of the glow layer (the canvas's size), so no px.
+    const pct = (v: number, of: number) => `${((v / of) * 100).toFixed(3)}%`;
+    const at = `${pct((box[0] + box[2]) / 2, width)} ${pct((box[1] + box[3]) / 2, height)}`;
+    return `radial-gradient(ellipse ${pct(r, width)} ${pct(r, height)} at ${at}, rgb(235 203 139 / 8%), rgb(235 203 139 / 0%))`;
   });
   return {
     ...layout,
@@ -641,7 +605,7 @@ export function StoryCanvas({ label, stepsId }: Props) {
 
     // Draw text only in the real font: the weights the scene uses, from the variable font.
     let live = true;
-    Promise.all([400, 500, 600, 700].map((w) => document.fonts.load(`${w} 12px ${mono}`)))
+    Promise.all([400, 500, 600, 700].map((w) => document.fonts.load(`${w} 1rem ${mono}`)))
       .catch(() => undefined)
       .then(() => {
         if (!live) return;

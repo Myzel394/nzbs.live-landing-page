@@ -82,7 +82,7 @@ export function AvailabilityChart({ series, months, waterline, layout: L, label,
       preserveAspectRatio="xMidYMid slice"
       role="img"
       aria-label={label}
-      style={{ "--x": `${fmt(xs[L.month])}px` } as CSSProperties}
+      style={{ "--x": `${fmt((xs[L.month] / L.width) * 100)}%` } as CSSProperties}
     >
       <defs>
         <linearGradient id={`${id}-sky`} x1="0" y1="0" x2="0" y2="1">

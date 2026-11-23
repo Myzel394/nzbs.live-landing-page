@@ -1,5 +1,6 @@
 import { ImmersiveSection } from "@/components/ImmersiveSection";
 import { SectionIntro } from "@/components/SectionIntro";
+import { holesFor } from "@/utils/holes";
 import { TimingDrift } from "./TimingDrift";
 import { TimingRuns } from "./TimingRuns";
 import { TimingScene } from "./TimingScene";
@@ -27,9 +28,7 @@ export const HOLE_ORDER = [
   15, 19, 30, 33, 41, 43, 47, 48, 49, 51, 53, 64, 65, 66, 67, 69,
 ] as const;
 
-export const holesFor = (gone: number): ReadonlySet<number> => new Set(HOLE_ORDER.slice(0, gone));
-
-const runs = RUNS.map((run) => ({ ...run, holes: holesFor(run.gone) }));
+const runs = RUNS.map((run) => ({ ...run, holes: holesFor(HOLE_ORDER, run.gone) }));
 
 export function Timing() {
   return (
@@ -42,8 +41,9 @@ export function Timing() {
       />
       <SectionIntro label="Timing" title="Know before your downloader does" titleId="early-title" variant="wide">
         <p>
-          The first night an article goes missing, you still have options: par2 covers a small gap, or you grab
-          another NZB while one is still around. Found by your downloader months later, at 97%, there are none left.
+          When an article goes missing, you still have options: par2 can often repair a few gaps.
+          Once more articles go missing, par2 might not be enough anymore and you cannot join the file anymore.
+          The file is lost forever on the Usenet.
         </p>
       </SectionIntro>
       <TimingRuns runs={runs} grid={GRID} />

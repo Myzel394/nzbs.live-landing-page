@@ -22,7 +22,7 @@
     );
 }
 
-@media (max-width: 999px) {
+@media (width < 62.5em) {
   .section {
     grid-template-columns: minmax(0, 1fr);
     padding-bottom: var(--space-3);

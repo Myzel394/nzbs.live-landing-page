@@ -4,8 +4,6 @@ import { seeded } from "./rng";
 // Geometry and motion rules of the lighthouse scene (the hero and the closing section), ported from the
 // approved mockup. Pure: the canvas drawing lives in components/lighthouse.
 
-/** Below this canvas width the lighthouse moves to the bottom right, close to the horizon. */
-export const NARROW_BELOW = 800;
 /**
  * Scene time of the still frame (reduced motion, and the first frame): the beam is out over the sea, turning
  * back to the tower. The mockup's 2.6 s lands on the lamp's flash, which washes out the headline.
@@ -47,9 +45,12 @@ export type LayoutOptions = {
   tiles: boolean;
 };
 
-export function layoutLighthouse(width: number, height: number, options: LayoutOptions): LighthouseGeometry {
+/**
+ * `narrow`: the phone layout, where the lighthouse moves to the bottom right, close to the horizon. It comes from
+ * the CSS (`--lighthouse-layout` in Lighthouse.module.css), whose placeholder gradient has to match.
+ */
+export function layoutLighthouse(width: number, height: number, options: LayoutOptions, narrow: boolean): LighthouseGeometry {
   const random = seeded(21);
-  const narrow = width < NARROW_BELOW;
   const horizon = height * (narrow ? 0.86 : 0.66);
   const lamp = { x: width * (narrow ? 0.86 : 0.82), y: height * (narrow ? 0.76 : 0.27) };
 

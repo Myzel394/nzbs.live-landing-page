@@ -11,10 +11,9 @@ export function Hero() {
       <div className={styles.copy}>
         <h1>Uptime monitoring for your NZBs</h1>
         <p className={styles.sub}>
-          Your NZB files point to pieces of files stored on Usenet, and those pieces disappear over time.
-          nzbs.live checks every one of them each month and tells you which are gone.
+          Your NZB files point to articles stored on the Usenet, and those articles disappear over time.
+          nzbs.live checks every one of them periodically and tells you which are gone, so you can act quickly and fetch your NZBs while par2 repair is still possible.
         </p>
-        <p className={styles.fact}>One check per article, on the 1st of every month</p>
         <div className={styles.actions}>
           <ButtonLink href={SIGNUP_URL}>Start monitoring</ButtonLink>
           <ButtonLink href="#forgets" variant="ghost">
@@ -22,9 +21,6 @@ export function Hero() {
           </ButtonLink>
         </div>
       </div>
-      <p className={styles.hint} aria-hidden="true">
-        Move the pointer to aim the light
-      </p>
       <MotionToggle className={styles.motion} />
     </header>
   );

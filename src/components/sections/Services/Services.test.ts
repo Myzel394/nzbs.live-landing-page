@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { radarLayout, SERVICES } from "./Services";
+import { radarLayout } from "@/utils/radar";
+import { RINGS, SERVICES } from "./Services";
 
 // [name, weight, left %, top %, depth, z-index, sweep degrees] as rendered by the approved mockup.
 const MOCKUP: [string, number, number, number, number, number, number][] = [
@@ -52,7 +53,7 @@ describe("services", () => {
   });
 
   it("places every service where the mockup did", () => {
-    const items = radarLayout();
+    const items = radarLayout(SERVICES, RINGS);
     expect(items.map((i) => i.name)).toEqual(MOCKUP.map((m) => m[0]));
     items.forEach((item, k) => {
       const [, weight, left, top, depth, zIndex, sweep] = MOCKUP[k];

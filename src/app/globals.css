@@ -29,9 +29,9 @@ a {
 }
 
 :focus-visible {
-  outline: 2px solid var(--acc);
-  outline-offset: 3px;
-  border-radius: 4px;
+  outline: 0.125rem solid var(--acc);
+  outline-offset: 0.1875rem;
+  border-radius: 0.25rem;
 }
 
 pre,
@@ -42,11 +42,11 @@ code {
 /* "Skip to content": off-screen until focused. */
 .skip-link {
   position: absolute;
-  left: 12px;
-  top: -60px;
+  left: 0.75rem;
+  top: -3.75rem;
   z-index: 50;
-  padding: 10px 14px;
-  border-radius: 8px;
+  padding: 0.625rem 0.875rem;
+  border-radius: 0.5rem;
   background: var(--acc);
   color: var(--bg);
   font-weight: 600;
@@ -54,7 +54,7 @@ code {
 }
 
 .skip-link:focus {
-  top: 12px;
+  top: 0.75rem;
 }
 
 /* "Pause motion" (MotionToggle) stops CSS animations too; canvases stop through useMotionPaused. */

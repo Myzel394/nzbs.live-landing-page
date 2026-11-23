@@ -1,11 +1,11 @@
 .toggle {
-  min-height: 36px;
-  padding: 0 13px;
-  border: 1px solid var(--line);
+  min-height: 2.25rem;
+  padding: 0 0.8125rem;
+  border: 0.0625rem solid var(--line);
   border-radius: var(--r-pill);
   background: color-mix(in srgb, var(--bg) 70%, transparent);
   color: var(--muted);
-  font: 500 12.5px var(--mono);
+  font: 500 0.78125rem var(--mono);
   cursor: pointer;
   transition:
     color 0.2s,
@@ -14,7 +14,7 @@
 
 .toggle:hover {
   color: var(--ink);
-  transform: translateY(-1px);
+  transform: translateY(-0.0625rem);
 }
 
 /* Nothing moves with reduced motion, and without JavaScript the button cannot work. */

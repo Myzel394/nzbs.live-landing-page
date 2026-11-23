@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { ARTICLES, buildCubes, messageId, STORY_TEXT, TAGGED } from "./StoryCanvas";
+import { ARTICLES, articleId, CUBES, STORY_TEXT, TAGGED } from "./StoryCanvas";
 
 // Reference values come from running the approved mockup's own JS.
 describe("story data", () => {
-  const cubes = buildCubes();
+  const cubes = CUBES;
 
   it("has 576 articles, 18 of them missing, at the mockup's positions", () => {
     expect(ARTICLES).toBe(576);
@@ -35,7 +35,7 @@ describe("story data", () => {
   });
 
   it("gives the tagged articles the Message-IDs seen in the mockup", () => {
-    expect(TAGGED.map(messageId)).toEqual([
+    expect(TAGGED.map(articleId)).toEqual([
       "part10of576.1r43u3@news.example",
       "part131of576.1bmxyn@news.example",
       "part216of576.eghjzy@news.example",

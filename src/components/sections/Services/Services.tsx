@@ -23,6 +23,7 @@ import {
 import { TbBrandPushover } from "react-icons/tb";
 import { ImmersiveSection } from "@/components/ImmersiveSection";
 import { SectionIntro } from "@/components/SectionIntro";
+import { type RadarPlacement, type RadarRing, radarLayout } from "@/utils/radar";
 import { Radar } from "./Radar";
 import styles from "./Services.module.css";
 
@@ -77,37 +78,9 @@ export const RINGS = [
   { weight: 3, radius: 0.34, startDeg: -80 },
   { weight: 2, radius: 0.6, startDeg: -62 },
   { weight: 1, radius: 0.88, startDeg: -95 },
-] as const;
+] as const satisfies readonly RadarRing[];
 
-export type RadarItem = Service & {
-  left: number; // % of the radar's width
-  top: number; // % of the radar's height
-  depth: number; // scale, 0.84 (back) to 1 (front)
-  zIndex: number;
-  sweepDeg: number; // conic-gradient angle (0 = up, clockwise), for the radar sweep
-};
-
-/**
- * Places every service on its ring (inner ring first), spread evenly from the ring's start angle.
- * The rings are ellipses (the radar is tilted), so y uses 44.6% instead of 50%.
- */
-export function radarLayout(services: readonly Service[] = SERVICES): RadarItem[] {
-  return RINGS.flatMap((ring) => {
-    const items = services.filter((s) => s.weight === ring.weight);
-    return items.map((service, k) => {
-      const a = ((ring.startDeg + (360 * k) / items.length) * Math.PI) / 180;
-      const sin = Math.sin(a);
-      return {
-        ...service,
-        left: 50 + Math.cos(a) * ring.radius * 50,
-        top: 50 + sin * ring.radius * 44.6,
-        depth: 0.84 + (0.16 * (1 + sin)) / 2,
-        zIndex: Math.trunc(10 + sin * 5),
-        sweepDeg: ((((a * 180) / Math.PI + 90) % 360) + 360) % 360,
-      };
-    });
-  });
-}
+export type RadarItem = Service & RadarPlacement;
 
 export function Services() {
   return (
@@ -120,7 +93,7 @@ export function Services() {
       >
         <p>Chat apps, push services, email, smart-home hubs or a plain webhook. Pick one, or several.</p>
       </SectionIntro>
-      <Radar items={radarLayout()} />
+      <Radar items={radarLayout(SERVICES, RINGS)} />
     </ImmersiveSection>
   );
 }

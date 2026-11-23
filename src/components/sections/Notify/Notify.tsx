@@ -9,7 +9,7 @@ export function Notify() {
       <span className={styles.beam} aria-hidden="true" />
       <SectionIntro label="On the 1st" title="One message, when the check is done" titleId="notify-title" variant="inline">
         <p>
-          A few minutes after midnight on the 1st, nzbs.live sends one short message: how many NZBs lost articles,
+          nzbs.live periodically checks all your NZBs and sends one short message: how many NZBs lost articles,
           and how many articles. On a quiet month it tells you everything is good.
         </p>
       </SectionIntro>

@@ -41,7 +41,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-width: 480px;
+  max-width: 30rem;
   min-height: 100vh;
 }
 
@@ -73,7 +73,7 @@
 
 .lede {
   margin: 0 0 var(--space-6);
-  font-size: 18px;
+  font-size: 1.125rem;
   color: var(--muted);
 }
 
@@ -81,15 +81,15 @@
   color: var(--acc);
   text-decoration: none;
   white-space: nowrap;
-  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 0.0625rem no-repeat;
 }
 
 .skip:hover {
-  background-size: 100% 1px;
+  background-size: 100% 0.0625rem;
 }
 
 .number {
-  margin: 0 0 10px;
+  margin: 0 0 0.625rem;
   font: 400 var(--fs-small) / 1.55 var(--mono);
   color: var(--acc);
 }
@@ -103,7 +103,7 @@
 .text {
   margin: var(--space-2) 0 0;
   max-width: 34ch;
-  font-size: 18.5px;
+  font-size: 1.15625rem;
   color: var(--ink-soft);
 }
 
@@ -118,13 +118,13 @@
 }
 
 /* Phones and small tablets: the scene fills the top, each step is a card held at the bottom. */
-@media (max-width: 999px) {
+@media (width < 62.5em) {
   .story {
     --story-mode: stacked;
   }
 
   .steps {
-    padding: 0 16px;
+    padding: 0 1rem;
   }
 
   .step {
@@ -141,28 +141,28 @@
     bottom: 3vh;
     margin-bottom: 3vh;
     padding: var(--space-3);
-    border: 1px solid var(--line);
+    border: 0.0625rem solid var(--line);
     border-radius: var(--r-card);
     background: rgb(10 13 18 / 86%);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(0.5rem);
   }
 
   .title {
-    font-size: 36px;
+    font-size: 2.25rem;
   }
 
   .lede {
     margin-bottom: var(--space-4);
-    font-size: 16px;
+    font-size: 1rem;
   }
 
   .text {
-    font-size: 16px;
+    font-size: 1rem;
   }
 }
 
 /* Short landscape phones: the card sits left, vertically centred, and the scene fills the right. */
-@media (max-width: 999px) and (max-height: 500px) and (orientation: landscape) {
+@media (width < 62.5em) and (height <= 31.25em) and (orientation: landscape) {
   .story {
     --story-mode: side;
   }
@@ -175,21 +175,21 @@
   .card {
     position: static;
     margin-bottom: 0;
-    padding: 12px var(--space-2);
+    padding: 0.75rem var(--space-2);
   }
 
   .label {
-    margin-bottom: 4px;
+    margin-bottom: 0.25rem;
   }
 
   .title {
-    margin-bottom: 6px;
-    font-size: 22px;
+    margin-bottom: 0.375rem;
+    font-size: 1.375rem;
   }
 
   .lede {
     margin-bottom: var(--space-2);
-    font-size: 12.5px;
+    font-size: 0.78125rem;
   }
 
   .skip {
@@ -197,16 +197,16 @@
   }
 
   .number {
-    margin-bottom: 4px;
+    margin-bottom: 0.25rem;
   }
 
   .heading {
-    font-size: 20px;
+    font-size: 1.25rem;
   }
 
   .text {
-    margin-top: 4px;
-    font-size: 13px;
+    margin-top: 0.25rem;
+    font-size: 0.8125rem;
     line-height: 1.35;
   }
 }

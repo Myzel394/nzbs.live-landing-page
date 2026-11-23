@@ -7,7 +7,7 @@
 }
 
 .full {
-  min-height: max(100vh, 780px);
+  min-height: max(100vh, 48.75rem);
 }
 
 /* Seams: every scene fades into the page's background above and below it. */
@@ -17,7 +17,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  height: 110px;
+  height: 6.875rem;
   z-index: 2;
   pointer-events: none;
 }
@@ -32,7 +32,7 @@
   background: linear-gradient(rgb(10 13 18 / 0%), var(--seam));
 }
 
-@media (max-width: 1179px) {
+@media (width < 73.75em) {
   .full {
     min-height: 0;
   }

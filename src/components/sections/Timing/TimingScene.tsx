@@ -98,13 +98,13 @@ export function TimingScene({ runs, grid, label }: Props) {
           nzbs.live tells you here
         </text>
         <text x={left} y={HORIZON + 70} className={`${styles.cap} ${styles.calloutNote}`}>
-          par2 covers one gap, or grab another NZB
+          par2 can recover a few gaps, but not too many
         </text>
         <text x={right} y={HORIZON + 46} textAnchor="end" className={`${styles.cap} ${styles.callout} ${styles.calloutLast}`}>
           your downloader finds out here
         </text>
         <text x={right} y={HORIZON + 70} textAnchor="end" className={`${styles.cap} ${styles.calloutNote}`}>
-          too many gone, stops at 97%
+          ...but it's too late, file is forever unrecoverable
         </text>
       </g>
     </svg>

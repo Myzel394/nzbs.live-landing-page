@@ -11,8 +11,8 @@ export function Closing() {
       <Lighthouse variant="closing" />
       <SectionIntro label="nzbs.live" title="Usenet keeps forgetting. Now you know." titleId="start-title">
         <p>
-          Add your NZBs once. On the 1st of every month nzbs.live checks every article, keeps every result and tells
-          you what went missing.
+          Check your NZBs using nzbs.live to handle early, when it's still possible to repair them.
+          nzbs.live keeps every result, so you can see which articles went missing and when.
         </p>
         <div className={styles.actions}>
           <ButtonLink href={SIGNUP_URL}>Start monitoring</ButtonLink>

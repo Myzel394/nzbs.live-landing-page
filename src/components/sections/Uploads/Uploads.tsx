@@ -120,7 +120,7 @@ const WIDE: ChartLayout = {
   month: 11,
 };
 
-/** The same chart for phones: it fits a 390px screen, labels only what sinks, every third month on the axis. */
+/** The same chart for phones: it fits a phone screen 390 wide, labels only what sinks, every third month on the axis. */
 const COMPACT: ChartLayout = {
   width: 360,
   height: 244,
@@ -173,7 +173,7 @@ export function Uploads() {
           variant="narrow"
         >
           <p>
-            Upload to Usenet yourself? nzbs.live has a Prometheus exporter.
+            nzbs.live has a Prometheus exporter.
             Every NZB becomes a line in your graphs, so you see which uploads
             are fading and replace them before they sink.
           </p>
